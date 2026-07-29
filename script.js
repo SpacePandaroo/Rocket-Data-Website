@@ -13,28 +13,47 @@ const CSV_URL =
 // Load Sheet
 // =======================================
 
+function parseNumericValue(value) {
+    if (value === null || value === undefined) return NaN;
+
+    const cleaned = String(value).replace(/,/g, "").trim();
+    if (cleaned === "") return NaN;
+
+    const num = Number(cleaned);
+    return Number.isFinite(num) ? num : NaN;
+}
+
 async function loadSheet() {
-
     Papa.parse(CSV_URL, {
-    download: true,
-    header: true,
+        download: true,
+        header: true,
+        skipEmptyLines: true,
 
-    complete: function(results) {
-        const data = results.data;
+        complete: function(results) {
+            const data = results.data || [];
 
-        // Find highest number in "Total World Flights"
-        const maxFlights = Math.max(
-            data.map(row => Number(row["Total World Flights"]))
-        );
+            const flightsHeader = Object.keys(data[0] || {}).find(
+                key => key.trim().toLowerCase() === "total world flights"
+            );
 
-        // Put it into your HTML
-        document.getElementById("total-count").textContent = maxFlights.toLocaleString();
-    },
+            const numericFlights = data
+                .map(row => parseNumericValue(row[flightsHeader]))
+                .filter(value => Number.isFinite(value));
 
-    error: function(error) {
-        console.error("Sheet loading error:", error);
-    }
-});
+            const maxFlights = numericFlights.length > 0
+                ? Math.max(...numericFlights)
+                : 0;
+
+            const countElement = document.getElementById("total-count");
+            if (countElement) {
+                countElement.textContent = maxFlights.toLocaleString();
+            }
+        },
+
+        error: function(error) {
+            console.error("Sheet loading error:", error);
+        }
+    });
 }
 
 
