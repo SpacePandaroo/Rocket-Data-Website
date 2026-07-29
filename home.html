@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Rocket Data Website</title>
+	<link rel="stylesheet" href="styles.css" />
+	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+	<script defer src="script.js"></script>
+</head>
+
+<body>
+	<div class="page">
+		<header class="header">
+			<div class="brand">TBD Name</div>
+			<nav class="nav">
+				<a href="#">Home</a>
+				<a href="about.html">About</a>
+			</nav>
+		</header>
+
+		<main class="main">
+			<section class="stats-row">
+				<div class="card stat-card">
+					<h2>Total Launch Count</h2>
+					<p class="stat-number" id="total-count">AWAITING API DATA</p>
+					<p>Across all spaceflight programs</p>
+				</div>
+				<div class="card stat-card">
+					<h2>Previous Launches</h2>
+					<ul class="launch-list" id="recent-launches"></ul>
+				</div>
+			</section>
+
+			<section class="content-grid">
+				<div class="card">
+					<h2>United States</h2>
+					<p>Launching Since 1957</p>
+					<a href="unitedstates.html"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>Russia/Former Soviet Union</h2>
+					<p>Launching Since 1957</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>Europe</h2>
+					<p>Launching Since 1965</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>Japan</h2>
+					<p>Launching Since 1966</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>China</h2>
+					<p>Launching Since 1970</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>India</h2>
+					<p>Launching Since 1979</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+				<div class="card">
+					<h2>Minor Space Nations</h2>
+					<p>Launching Since 1988</p>
+					<a href="#"><button class="btn">Dive In Deeper</button></a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<p>© 2026, SpacePandaroo. Licensed under CC BY-SA 4.0. Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
+		</footer>
+	</div>
+</body>
+
+</html>
