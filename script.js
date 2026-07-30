@@ -24,6 +24,8 @@ const COLUMN_INDICES = {
     vehicleFamily: 8,   // Column I
     vehicleSub: 9,      // Column J
     vehicleConfig: 10,  // Column K
+    s1serial: 11,       // Column L
+    s1flightcount: 12,       // Column M
     missionName: 20,    // Column U
     outcome: 21,        // Column V
     s1Landing: 22,      // Column W
@@ -105,10 +107,16 @@ function buildLaunchEntry(row) {
         country: row[COLUMN_INDICES.country] ?? "",
         date: row[COLUMN_INDICES.date] ?? "",
         missionName: row[COLUMN_INDICES.missionName] ?? "",
+        vehicleFamily: row[COLUMN_INDICES.vehicleFamily] ?? "",
+        vehicleSub: row[COLUMN_INDICES.vehicleSub] ?? "",
+        vehicleConfig: row[COLUMN_INDICES.vehicleConfig] ?? "",
         vehicle: uniqueVehicleParts.join(" / "),
         outcome: row[COLUMN_INDICES.outcome] ?? "",
         s1Landing: row[COLUMN_INDICES.s1Landing] ?? "",
-        s2Landing: row[COLUMN_INDICES.s2Landing] ?? ""
+        s2Landing: row[COLUMN_INDICES.s2Landing] ?? "",
+        padTurnaround: row[16] ?? "",
+        s1Turnaround: row[17] ?? "",
+        s2Turnaround: row[18] ?? ""
     };
 }
 
@@ -190,7 +198,6 @@ function buildCountryEntry(row) {
     };
 }
 
-// Populate the country cards using summary counts and latest launch information.
 function populateCountryCards(countryEntries, launchEntries) {
     const countryEntriesWithMeta = countryEntries
         .map((entry, index) => ({ ...entry, __index: index }))
@@ -245,13 +252,19 @@ async function loadSheet() {
         download: true,
         skipEmptyLines: true,
 
-        complete: function(results) {
+        complete: function (results) {
             const rows = results.data || [];
 
             if (rows.length === 0) return;
 
             const headerRow = rows[0] || [];
-            const dataRows = rows.slice(1).filter(row => row && row.some(hasText));
+            const dataRows = rows.filter(row => {
+                const date = parseLaunchDate(row[6]);
+                return date !== null;
+            });
+
+            console.log("Column L example:", dataRows[0][11]);
+            console.log("Column M example:", dataRows[0][12]);
 
             const flightsHeaderIndex = headerRow.findIndex(
                 header => normalizeHeader(header) === "total world flights"
@@ -274,11 +287,61 @@ async function loadSheet() {
             const launchEntries = dataRows.map(buildLaunchEntry);
             buildRecentLaunches(launchEntries);
 
+            // Top 10 Most Flown
+            const topFamilies = getTopTen(dataRows, COLUMN_INDICES.vehicleFamily);
+            const topSubfamilies = getTopTen(dataRows, COLUMN_INDICES.vehicleSub);
+            const topConfigurations = getTopTen(dataRows, COLUMN_INDICES.vehicleConfig);
+
+            const boosterFlights = {};
+
+            dataRows.forEach(row => {
+
+                const serial = row[COLUMN_INDICES.s1serial];
+                const flightNumber = parseNumericValue(row[COLUMN_INDICES.s1flightcount]);
+
+                if (!serial || !Number.isFinite(flightNumber)) return;
+
+                const booster = String(serial).trim();
+
+                if (!boosterFlights[booster] || flightNumber > boosterFlights[booster]) {
+                    boosterFlights[booster] = flightNumber;
+                }
+            });
+
+            const sortedBoosters = Object.entries(boosterFlights)
+                .sort((a, b) => b[1] - a[1]);
+
+            // Top 10 flight numbers + ties
+            const topFlightNumbers = [...new Set(sortedBoosters.map(item => item[1]))]
+                .slice(0, 10);
+
+            const topVehicles = [];
+
+            topFlightNumbers.forEach((flightNumber, index) => {
+
+                const boosters = sortedBoosters
+                    .filter(item => item[1] === flightNumber)
+                    .map(item => item[0]);
+
+                topVehicles.push([
+                    boosters.join(", "),
+                    flightNumber
+                ]);
+
+            });
+
+            populateList("record-most-family", topFamilies);
+            populateList("record-most-subfamily", topSubfamilies);
+            populateList("record-most-configuration", topConfigurations);
+            populateList("record-most-vehicle", topVehicles);
+
             const countryEntries = dataRows.map(buildCountryEntry);
+            populateCountryCards(countryEntries, launchEntries);
+
             populateCountryCards(countryEntries, launchEntries);
         },
 
-        error: function(error) {
+        error: function (error) {
             console.error("Sheet loading error:", error);
         }
     });
@@ -324,6 +387,48 @@ function buildTable(data) {
 // =======================================
 // Start
 // =======================================
+
+function getTopTen(rows, columnIndex) {
+
+    const counts = {};
+
+    rows.forEach(row => {
+
+        let value = row[columnIndex];
+
+        if (!value) return;
+
+        value = String(value).trim();
+
+        counts[value] = (counts[value] || 0) + 1;
+
+    });
+
+    return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+}
+
+function populateList(id, data) {
+
+    const list = document.getElementById(id);
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    data.forEach(([name, count]) => {
+
+        const li = document.createElement("li");
+
+        li.textContent = `${name} (${count})`;
+
+        list.appendChild(li);
+
+    });
+
+}
 
 loadSheet();
 

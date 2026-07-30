@@ -158,16 +158,26 @@ body {
     word-break: break-word;
 }
 
-/* Grid layout for the country summary cards. */
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    justify-items: center;
+.record-row {
+    display: flex;
+    gap: 30px;
+    width: 100%;
 }
 
-.content-grid .card:last-child {
-    grid-column: 2 / 3;
+.record-item {
+    flex: 1;
+}
+
+/* Full-width stacked layout for record sections. */
+.content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.content-grid .card {
+    width: 100%;
 }
 
 .title {
@@ -189,6 +199,18 @@ body {
 
 .card h2 {
     margin-top: 0;
+}
+
+.card ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    text-align: left;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.card li {
+    line-height: 1.4;
 }
 
 .footer {

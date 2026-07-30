@@ -4,9 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>United States Spaceflight</title>
+	<title>Rocket Launch Records</title>
 	<!-- Reuse site styles for a consistent look on the records page -->
 	<link rel="stylesheet" href="styles.css" />
+	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+	<script defer src="script.js"></script>
 </head>
 
 <body>
@@ -20,15 +22,153 @@
 			</nav>
 		</header>
 
-		<!-- Main content area for the records page. Add tables or charts here. -->
-		<main class="main">
-			<section class="content-grid">
-				<div class="card">
-					<h1>Records Page</h1>
-					<p>This page is currently under construction. Add tables, charts, or record summaries here.</p>
-				</div>
-			</section>
-		</main>
+		<!-- Main content area for the records page -->
+<main class="main">
+
+    <section class="content-grid">
+
+    <!-- Flight Records -->
+    <div class="card">
+        <h2>Flight Records</h2>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Most Flown Family</strong>
+                <ol id="record-most-family">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Most Flown Subfamily</strong>
+                <ol id="record-most-subfamily">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Most Flown Configuration</strong>
+                <ol id="record-most-configuration">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Most Flown Vehicle</strong>
+                <ol id="record-most-vehicle">Loading...</ol>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Success Records -->
+    <div class="card">
+        <h2>Success Records</h2>
+
+        <h3>Most Successful</h3>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Family</strong>
+                <ol id="record-best-family">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Subfamily</strong>
+                <ol id="record-best-subfamily">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Configuration</strong>
+                <ol id="record-best-configuration">Loading...</ol>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h3>Least Successful</h3>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Family</strong>
+                <ol id="record-worst-family">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Subfamily</strong>
+                <ol id="record-worst-subfamily">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Configuration</strong>
+                <ol id="record-worst-configuration">Loading...</ol>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Turnaround Records -->
+    <div class="card">
+        <h2>Turnaround Records</h2>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Quickest Vehicle Turnaround</strong>
+                <ol id="record-quickest-turnaround">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Quickest Launch Turnaround</strong>
+                <ol id="record-launch-turnaround">Loading...</ol>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Annual Records -->
+    <div class="card">
+        <h2>Annual Records</h2>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Most Launches in a Year</strong>
+                <ol id="record-launches-year">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Most Launches in a Year (Family)</strong>
+                <ol id="record-family-year">Loading...</ol>
+            </div>
+
+            <div class="record-item">
+                <strong>Most Launches in a Year (Country)</strong>
+                <ol id="record-country-year">Loading...</ol>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Streak Records -->
+    <div class="card">
+        <h2>Streak Records</h2>
+
+        <div class="record-row">
+
+            <div class="record-item">
+                <strong>Most Consecutive Successes</strong>
+                <ol id="record-consecutive-successes">Loading...</ol>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</main>
 
 		<footer class="footer">
 			<p>Rocket Launch History by SpacePandaroo</p>

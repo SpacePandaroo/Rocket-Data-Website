@@ -2,36 +2,111 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>United States Spaceflight</title>
-	<link rel="stylesheet" href="../styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States Spaceflight</title>
+    <link rel="stylesheet" href="../styles.css" />
 </head>
 
 <body>
-	<div class="page">
-		<header class="header">
-			<div class="brand">RocketLaunchHistory</div>
-			<nav class="nav">
-				<a href="index.html">Home</a>
-				<a href="about.html">About</a>
-			</nav>
-		</header>
 
-		<main class="main">
-			<h1 class="title">United States Spaceflight</h1>
-			<section class="stats-row">
-				<div class="card stat-card">
-					<h2>Total Launch Count</h2>
-					<p class="stat-number" id="total-count">AWAITING API DATA</p>
-					<p>Across all spaceflight programs</p>
-				</div>
-				<div class="card stat-card">
-					<h2>Previous Launches</h2>
-					<ul class="launch-list" id="recent-launches"></ul>
-				</div>
-			</section>
-		</main>
+    <div class="page">
+
+        <header class="header">
+            <div class="brand">RocketLaunchHistory</div>
+
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../about.html">About</a>
+            </nav>
+        </header>
+
+        <main class="main">
+
+            <h1 class="title">United States Spaceflight</h1>
+
+            <!-- Existing Statistics -->
+            <section class="stats-row">
+
+                <div class="card stat-card">
+                    <h2>Total Launch Count</h2>
+                    <p class="stat-number" id="total-count">AWAITING API DATA</p>
+                    <p>Across all spaceflight programs</p>
+                </div>
+
+                <div class="card stat-card">
+                    <h2>Previous Launches</h2>
+                    <ul class="launch-list" id="recent-launches"></ul>
+                </div>
+
+            </section>
+
+            <!-- Most Flown / Success Rates -->
+            <section class="stats-row">
+
+                <div class="card stat-card">
+                    <h2>Most Flown</h2>
+
+                    <p><strong>Family</strong><br><span id="most-family">Awaiting API Data</span></p>
+
+                    <p><strong>Subfamily</strong><br><span id="most-subfamily">Awaiting API Data</span></p>
+
+                    <p><strong>Configuration</strong><br><span id="most-configuration">Awaiting API Data</span></p>
+
+                    <p><strong>Vehicle</strong><br><span id="most-vehicle">Awaiting API Data</span></p>
+                </div>
+
+                <div class="card stat-card">
+                    <h2>Success Rates</h2>
+
+                    <h3>Most Successful</h3>
+
+                    <p><strong>Family</strong><br><span id="best-family">Awaiting API Data</span></p>
+
+                    <p><strong>Subfamily</strong><br><span id="best-subfamily">Awaiting API Data</span></p>
+
+                    <p><strong>Configuration</strong><br><span id="best-configuration">Awaiting API Data</span></p>
+
+                    <hr>
+
+                    <h3>Least Successful</h3>
+
+                    <p><strong>Family</strong><br><span id="worst-family">Awaiting API Data</span></p>
+
+                    <p><strong>Subfamily</strong><br><span id="worst-subfamily">Awaiting API Data</span></p>
+
+                    <p><strong>Configuration</strong><br><span id="worst-configuration">Awaiting API Data</span></p>
+                </div>
+
+            </section>
+
+            <!-- Records -->
+            <section class="stats-row">
+
+                <div class="card stat-card">
+                    <h2>Turnaround Records</h2>
+
+                    <p><strong>Quickest Vehicle Turnaround</strong><br><span id="vehicle-turnaround">Awaiting API Data</span></p>
+
+                    <p><strong>Vehicle</strong><br><span id="vehicle-name">Awaiting API Data</span></p>
+
+                    <p><strong>Quickest Launch Turnaround</strong><br><span id="launch-turnaround">Awaiting API Data</span></p>
+                </div>
+
+                <div class="card stat-card">
+                    <h2>Launch Records</h2>
+
+                    <p><strong>Most Launches in One Year</strong><br><span id="launches-year">Awaiting API Data</span></p>
+
+                    <p><strong>Most Consecutive Successes</strong><br><span id="consecutive-successes">Awaiting API Data</span></p>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
 </body>
 
 </html>
