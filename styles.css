@@ -1,23 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap');
 
-/* Root theme variables for colors and appearance. */
 :root {
     color-scheme: dark;
-    --bg: #05070b;
-    --surface: #0f1422;
-    --text: #f3f0f8;
-    --muted: #8a90a0;
-    --accent: #6f5b86;
-    --accent-dark: #2a2233;
-    --border: #3c3546;
+
+    --bg: #04060d;
+    --surface: #101525;
+
+    --text: #f5f3ff;
+    --muted: #9ca3b8;
+
+    /* Aurora colors */
+    --accent: #8b5cf6;        /* Purple */
+    --accent-blue: #38bdf8;   /* Blue */
+    --accent-green: #34d399;  /* Green */
+    --accent-red: #fb7185;    /* Red/Pink */
+
+    --accent-dark: #241638;
+    --border: #3b3850;
 }
 
-/* Use border-box sizing everywhere so padding is included in width/height. */
 * {
     box-sizing: border-box;
 }
 
-/* Base page styling: typography, background, and page spacing. */
 body {
     margin: 0;
     font-family: 'Chakra Petch', Arial, sans-serif;
@@ -34,14 +39,12 @@ body {
     overflow-x: hidden;
 }
 
-/* Page wrapper centers the site content and adds padding. */
 .page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Header layout puts the logo and navigation on the same row. */
 .header {
     display: flex;
     justify-content: space-between;
@@ -100,7 +103,6 @@ body {
     margin: 0 0 20px;
 }
 
-/* Button styling for clickable actions and links. */
 .btn {
     display: inline-block;
     background: #11131a;
@@ -118,16 +120,15 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
 }
 
-/* Stats section uses two columns for summary data and the recent launch list. */
 .stats-row {
     display: grid;
-    grid-template-columns: minmax(240px, 1fr) minmax(320px, 1.8fr);
-    gap: 1.5rem;
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 12px;
 }
 
 .stat-card {
-    min-width: 0;
+    text-align: left;
 }
 
 .stat-number {
@@ -137,52 +138,38 @@ body {
     margin: 8px 0;
 }
 
-.recent-launches-card {
-    width: 100%;
-}
-
 .launch-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.75rem;
-    max-height: 24rem;
-    overflow-y: auto;
+    padding-left: 18px;
+    margin: 8px 0 0;
+    color: var(--muted);
 }
 
 .launch-list li {
-    line-height: 1.4;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    margin-bottom: 8px;
 }
 
-.record-row {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-}
-
-.record-item {
-    flex: 1;
-}
-
-/* Full-width stacked layout for record sections. */
 .content-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
-    width: 100%;
+    justify-items: center;
 }
 
-.content-grid .card {
-    width: 100%;
+.content-grid .card:last-child {
+    grid-column: 2 / 3;
 }
 
-.title {
-    text-align: center;
+.records-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    justify-items: center;
 }
+
+.records-grid .card:last-child {
+    grid-column: auto;
+}
+
 .card {
     background: rgba(11, 18, 32, 0.85);
     padding: 24px;
@@ -201,18 +188,6 @@ body {
     margin-top: 0;
 }
 
-.card ol {
-    margin: 0;
-    padding-left: 1.2rem;
-    text-align: left;
-    display: grid;
-    gap: 0.5rem;
-}
-
-.card li {
-    line-height: 1.4;
-}
-
 .footer {
     text-align: center;
     padding: 24px 0 8px;
@@ -220,7 +195,6 @@ body {
     font-size: 0.95rem;
 }
 
-/* About page centers its content vertically and horizontally. */
 .about-page {
     min-height: 100vh;
     display: flex;
@@ -229,6 +203,12 @@ body {
     align-items: center;
     text-align: center;
     padding: 40px 20px;
+}
+
+.page-title {
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
 }
 
 @media (max-width: 768px) {
@@ -244,10 +224,6 @@ body {
     }
 
     .content-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-row {
         grid-template-columns: 1fr;
     }
 }

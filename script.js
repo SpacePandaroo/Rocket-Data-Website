@@ -1,9 +1,6 @@
 // =======================================
 // Google Sheet Settings
 // =======================================
-// These settings define the Google Sheet to load and the exported CSV URL.
-// The page fetches the sheet data as CSV so it can display launch statistics.
-// =======================================
 
 const SHEET_ID = "15f0ig9CIZE-m705V-9YRzQBVwJ3Bbj0wvFU0y9zarlU";
 const GID = "0";
@@ -14,25 +11,20 @@ const CSV_URL =
 // =======================================
 // Helpers
 // =======================================
-// These helper functions parse the sheet values, normalize text, and build the objects used by the page.
-// =======================================
 
 const COLUMN_INDICES = {
-    countryCount: 1,    // Column B in the sheet
-    country: 5,         // Column F
-    date: 6,            // Column G
-    vehicleFamily: 8,   // Column I
-    vehicleSub: 9,      // Column J
-    vehicleConfig: 10,  // Column K
-    s1serial: 11,       // Column L
-    s1flightcount: 12,       // Column M
-    missionName: 20,    // Column U
-    outcome: 21,        // Column V
-    s1Landing: 22,      // Column W
-    s2Landing: 23       // Column X
+    countryCount: 1,    // B
+    country: 5,         // F
+    date: 6,            // G
+    vehicleFamily: 8,   // I
+    vehicleSub: 9,      // J
+    vehicleConfig: 10,  // K
+    missionName: 20,    // U
+    outcome: 21,        // V
+    s1Landing: 22,      // W
+    s2Landing: 23       // X
 };
 
-// Convert spreadsheet values to numbers safely, ignoring commas and empty strings.
 function parseNumericValue(value) {
     if (value === null || value === undefined) return NaN;
 
@@ -43,7 +35,6 @@ function parseNumericValue(value) {
     return Number.isFinite(num) ? num : NaN;
 }
 
-// Normalize a header string so it can be compared in a case-insensitive way.
 function normalizeHeader(value) {
     return String(value ?? "")
         .toLowerCase()
@@ -51,25 +42,22 @@ function normalizeHeader(value) {
         .trim();
 }
 
-// Check whether a value contains text after trimming whitespace.
 function hasText(value) {
     return value !== null && value !== undefined && String(value).trim() !== "";
 }
 
-// Parse a launch date from spreadsheet text or Excel-style numeric date values.
 function parseLaunchDate(value) {
     if (!hasText(value)) return null;
 
-    // Some sheets can export dates as numbers relative to Excel's epoch.
     if (typeof value === "number") {
         const excelEpoch = new Date(Date.UTC(1899, 11, 30));
         return new Date(excelEpoch.getTime() + value * 86400000);
     }
 
     const raw = String(value).trim();
+
     const candidates = [raw];
 
-    // If the date is in a format like YYYY/MM/DD or YYYY-MM-DD, normalize it.
     const isoMatch = raw.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/);
     if (isoMatch) {
         candidates.push(`${isoMatch[1]}-${isoMatch[2].padStart(2, "0")}-${isoMatch[3].padStart(2, "0")}`);
@@ -85,7 +73,6 @@ function parseLaunchDate(value) {
     return null;
 }
 
-// Build a launch entry object from a sheet row.
 function buildLaunchEntry(row) {
     const vehicleParts = [
         row[COLUMN_INDICES.vehicleFamily],
@@ -95,7 +82,6 @@ function buildLaunchEntry(row) {
         .filter(hasText)
         .map(value => String(value).trim());
 
-    // Remove duplicate vehicle parts before combining them.
     const uniqueVehicleParts = [];
     vehicleParts.forEach(part => {
         if (!uniqueVehicleParts.includes(part)) {
@@ -107,20 +93,13 @@ function buildLaunchEntry(row) {
         country: row[COLUMN_INDICES.country] ?? "",
         date: row[COLUMN_INDICES.date] ?? "",
         missionName: row[COLUMN_INDICES.missionName] ?? "",
-        vehicleFamily: row[COLUMN_INDICES.vehicleFamily] ?? "",
-        vehicleSub: row[COLUMN_INDICES.vehicleSub] ?? "",
-        vehicleConfig: row[COLUMN_INDICES.vehicleConfig] ?? "",
         vehicle: uniqueVehicleParts.join(" / "),
         outcome: row[COLUMN_INDICES.outcome] ?? "",
         s1Landing: row[COLUMN_INDICES.s1Landing] ?? "",
-        s2Landing: row[COLUMN_INDICES.s2Landing] ?? "",
-        padTurnaround: row[16] ?? "",
-        s1Turnaround: row[17] ?? "",
-        s2Turnaround: row[18] ?? ""
+        s2Landing: row[COLUMN_INDICES.s2Landing] ?? ""
     };
 }
 
-// Render the recent launches list on the homepage.
 function buildRecentLaunches(data) {
     const list = document.getElementById("recent-launches");
     if (!list) return;
@@ -188,7 +167,6 @@ function buildRecentLaunches(data) {
     });
 }
 
-// Build a country summary object from a sheet row.
 function buildCountryEntry(row) {
     const countValue = parseNumericValue(row[COLUMN_INDICES.countryCount]);
 
@@ -209,7 +187,6 @@ function populateCountryCards(countryEntries, launchEntries) {
         let matchingEntries = [];
 
         if (definition.label === "Minor Space Nations") {
-            // The last group contains all countries not matched by the main categories.
             matchingEntries = countryEntriesWithMeta.filter(entry => !usedIndexes.has(entry.__index));
         } else {
             matchingEntries = countryEntriesWithMeta.filter(entry => {
@@ -244,33 +221,24 @@ function populateCountryCards(countryEntries, launchEntries) {
 // =======================================
 // Load Sheet
 // =======================================
-// Fetch the CSV, parse it, and render the counts and launch summaries.
-// =======================================
 
 async function loadSheet() {
     Papa.parse(CSV_URL, {
         download: true,
         skipEmptyLines: true,
 
-        complete: function (results) {
+        complete: function(results) {
             const rows = results.data || [];
 
             if (rows.length === 0) return;
 
             const headerRow = rows[0] || [];
-            const dataRows = rows.filter(row => {
-                const date = parseLaunchDate(row[6]);
-                return date !== null;
-            });
-
-            console.log("Column L example:", dataRows[0][11]);
-            console.log("Column M example:", dataRows[0][12]);
+            const dataRows = rows.slice(1).filter(row => row && row.some(hasText));
 
             const flightsHeaderIndex = headerRow.findIndex(
                 header => normalizeHeader(header) === "total world flights"
             );
 
-            // Find the largest numeric value in the flights column and show it as the total.
             const numericFlights = dataRows
                 .map(row => parseNumericValue(row[flightsHeaderIndex]))
                 .filter(value => Number.isFinite(value));
@@ -287,61 +255,11 @@ async function loadSheet() {
             const launchEntries = dataRows.map(buildLaunchEntry);
             buildRecentLaunches(launchEntries);
 
-            // Top 10 Most Flown
-            const topFamilies = getTopTen(dataRows, COLUMN_INDICES.vehicleFamily);
-            const topSubfamilies = getTopTen(dataRows, COLUMN_INDICES.vehicleSub);
-            const topConfigurations = getTopTen(dataRows, COLUMN_INDICES.vehicleConfig);
-
-            const boosterFlights = {};
-
-            dataRows.forEach(row => {
-
-                const serial = row[COLUMN_INDICES.s1serial];
-                const flightNumber = parseNumericValue(row[COLUMN_INDICES.s1flightcount]);
-
-                if (!serial || !Number.isFinite(flightNumber)) return;
-
-                const booster = String(serial).trim();
-
-                if (!boosterFlights[booster] || flightNumber > boosterFlights[booster]) {
-                    boosterFlights[booster] = flightNumber;
-                }
-            });
-
-            const sortedBoosters = Object.entries(boosterFlights)
-                .sort((a, b) => b[1] - a[1]);
-
-            // Top 10 flight numbers + ties
-            const topFlightNumbers = [...new Set(sortedBoosters.map(item => item[1]))]
-                .slice(0, 10);
-
-            const topVehicles = [];
-
-            topFlightNumbers.forEach((flightNumber, index) => {
-
-                const boosters = sortedBoosters
-                    .filter(item => item[1] === flightNumber)
-                    .map(item => item[0]);
-
-                topVehicles.push([
-                    boosters.join(", "),
-                    flightNumber
-                ]);
-
-            });
-
-            populateList("record-most-family", topFamilies);
-            populateList("record-most-subfamily", topSubfamilies);
-            populateList("record-most-configuration", topConfigurations);
-            populateList("record-most-vehicle", topVehicles);
-
             const countryEntries = dataRows.map(buildCountryEntry);
-            populateCountryCards(countryEntries, launchEntries);
-
             populateCountryCards(countryEntries, launchEntries);
         },
 
-        error: function (error) {
+        error: function(error) {
             console.error("Sheet loading error:", error);
         }
     });
@@ -350,12 +268,9 @@ async function loadSheet() {
 // =======================================
 // Build HTML Table
 // =======================================
-// This helper builds a table if the page includes an element with id="sheetTable".
-// =======================================
 
 function buildTable(data) {
     const table = document.getElementById("sheetTable");
-    if (!table) return;
 
     const thead = table.querySelector("thead");
     const tbody = table.querySelector("tbody");
@@ -387,48 +302,6 @@ function buildTable(data) {
 // =======================================
 // Start
 // =======================================
-
-function getTopTen(rows, columnIndex) {
-
-    const counts = {};
-
-    rows.forEach(row => {
-
-        let value = row[columnIndex];
-
-        if (!value) return;
-
-        value = String(value).trim();
-
-        counts[value] = (counts[value] || 0) + 1;
-
-    });
-
-    return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10);
-
-}
-
-function populateList(id, data) {
-
-    const list = document.getElementById(id);
-
-    if (!list) return;
-
-    list.innerHTML = "";
-
-    data.forEach(([name, count]) => {
-
-        const li = document.createElement("li");
-
-        li.textContent = `${name} (${count})`;
-
-        list.appendChild(li);
-
-    });
-
-}
 
 loadSheet();
 

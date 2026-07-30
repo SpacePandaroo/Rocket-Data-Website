@@ -2,178 +2,75 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Rocket Launch Records</title>
-	<!-- Reuse site styles for a consistent look on the records page -->
-	<link rel="stylesheet" href="styles.css" />
-	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-	<script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Launch Records</title>
+    <!-- Reuse site styles for a consistent look on the records page -->
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script defer src="records.js"></script>
 </head>
 
 <body>
-	<div class="page">
-		<header class="header">
-			<div class="brand">RocketLaunchHistory</div>
-			<nav class="nav">
-				<a href="index.html">Home</a>
-				<a href="worldrecords.html">Records</a>
-				<a href="about.html">About</a>
-			</nav>
-		</header>
+    <div class="page">
+        <header class="header">
+            <div class="brand">RocketLaunchHistory</div>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="worldrecords.html">Records</a>
+                <a href="about.html">About</a>
+            </nav>
+        </header>
 
-		<!-- Main content area for the records page -->
-<main class="main">
+        <!-- Main content area for the records page -->
+        <main class="main">
 
-    <section class="content-grid">
+            <h1 class="page-title">Flight Records</h1>
 
-    <!-- Flight Records -->
-    <div class="card">
-        <h2>Flight Records</h2>
+            <section class="records-grid">
 
-        <div class="record-row">
+                <div class="card">
+                    <h2>Most Flown Family</h2>
 
-            <div class="record-item">
-                <strong>Most Flown Family</strong>
-                <ol id="record-most-family">Loading...</ol>
-            </div>
+                    <table id="family-ranking">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Family</th>
+                            <th>Flights</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h2>Most Flown Subfamily</h2>
 
-            <div class="record-item">
-                <strong>Most Flown Subfamily</strong>
-                <ol id="record-most-subfamily">Loading...</ol>
-            </div>
+                    <table id="subfamily-ranking">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Subfamily</th>
+                            <th>Flights</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h2>Most Flown Configuration</h2>
 
-            <div class="record-item">
-                <strong>Most Flown Configuration</strong>
-                <ol id="record-most-configuration">Loading...</ol>
-            </div>
+                    <table id="configuration-ranking">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Configuration</th>
+                            <th>Flights</th>
+                        </tr>
+                    </table>
+                </div>
 
-            <div class="record-item">
-                <strong>Most Flown Vehicle</strong>
-                <ol id="record-most-vehicle">Loading...</ol>
-            </div>
+            </section>
 
-        </div>
-    </div>
+        </main>
 
-
-    <!-- Success Records -->
-    <div class="card">
-        <h2>Success Records</h2>
-
-        <h3>Most Successful</h3>
-
-        <div class="record-row">
-
-            <div class="record-item">
-                <strong>Family</strong>
-                <ol id="record-best-family">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Subfamily</strong>
-                <ol id="record-best-subfamily">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Configuration</strong>
-                <ol id="record-best-configuration">Loading...</ol>
-            </div>
-
-        </div>
-
-        <hr>
-
-        <h3>Least Successful</h3>
-
-        <div class="record-row">
-
-            <div class="record-item">
-                <strong>Family</strong>
-                <ol id="record-worst-family">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Subfamily</strong>
-                <ol id="record-worst-subfamily">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Configuration</strong>
-                <ol id="record-worst-configuration">Loading...</ol>
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- Turnaround Records -->
-    <div class="card">
-        <h2>Turnaround Records</h2>
-
-        <div class="record-row">
-
-            <div class="record-item">
-                <strong>Quickest Vehicle Turnaround</strong>
-                <ol id="record-quickest-turnaround">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Quickest Launch Turnaround</strong>
-                <ol id="record-launch-turnaround">Loading...</ol>
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- Annual Records -->
-    <div class="card">
-        <h2>Annual Records</h2>
-
-        <div class="record-row">
-
-            <div class="record-item">
-                <strong>Most Launches in a Year</strong>
-                <ol id="record-launches-year">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Most Launches in a Year (Family)</strong>
-                <ol id="record-family-year">Loading...</ol>
-            </div>
-
-            <div class="record-item">
-                <strong>Most Launches in a Year (Country)</strong>
-                <ol id="record-country-year">Loading...</ol>
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- Streak Records -->
-    <div class="card">
-        <h2>Streak Records</h2>
-
-        <div class="record-row">
-
-            <div class="record-item">
-                <strong>Most Consecutive Successes</strong>
-                <ol id="record-consecutive-successes">Loading...</ol>
-            </div>
-
-        </div>
-    </div>
-
-</section>
-
-</main>
-
-		<footer class="footer">
-			<p>Rocket Launch History by SpacePandaroo</p>
-			<p>Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
-		</footer>
+        <footer class="footer">
+            <p>Rocket Launch History by SpacePandaroo</p>
+            <p>Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
+        </footer>
 </body>
 
 </html>
