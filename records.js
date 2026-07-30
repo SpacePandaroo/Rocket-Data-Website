@@ -77,4 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
     //Least Successful Configuration
     createRankingTable("J52:L61", "#configuration-failure");
 
+    //Most Launches In a Year (Family)
+    createRankingTable("N16:P25", "#most-launches-year-family");
+
+    //Most Launches In a Year (Country)
+    createRankingTable("R40:T46", "#most-launches-year-country");
+
+    //Most Launches In a Year (Total)
+    createRankingTable("N40:P49", "#most-launches-year-total");
+
 });
