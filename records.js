@@ -56,6 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
     //Most Consecutive Successes
     createRankingTable("N28:P37", "#consecutive-successes");
 
+    //Most Flown Vehicle
+    createRankingTable("N4:P13", "#most-flown-vehicle");
+
     //Most Successful Family
     createRankingTable("B40:D49", "#family-success");
 
