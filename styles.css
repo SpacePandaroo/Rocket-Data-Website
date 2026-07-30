@@ -170,6 +170,11 @@ body {
     grid-column: auto;
 }
 
+.record-grid.consecutive-successes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .card {
     background: rgba(11, 18, 32, 0.85);
     padding: 24px;
