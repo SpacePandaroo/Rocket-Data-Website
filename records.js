@@ -47,11 +47,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // Most Flown Family
     createRankingTable("B28:D37", "#family-ranking");
 
-
     // Most Flown Subfamily
     createRankingTable("F28:H37", "#subfamily-ranking");
 
     //Most Flown Configuration
     createRankingTable("J28:L37", "#configuration-ranking");
+
+    //Most Successful Family
+    createRankingTable("B40:D49", "#family-success");
+
+    //Most Successful Subfamily
+    createRankingTable("F40:H49", "#subfamily-success");
+
+    //Most Successful Configuration
+    createRankingTable("J40:L49", "#configuration-success");
+
+    //Least Successful Family
+    createRankingTable("B52:D61", "#family-failure");
+
+    //Least Successful Subfamily
+    createRankingTable("F52:H61", "#subfamily-failure");
+
+    //Least Successful Configuration
+    createRankingTable("J52:L61", "#configuration-failure");
 
 });
