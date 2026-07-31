@@ -86,4 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
     //Most Launches In a Year (Total)
     createRankingTable("N40:P49", "#most-launches-year-total");
 
+    //Quickest Turnaround (Vehicle)
+    createRankingTable("R4:T13", "#quickest-turnaround-vehicle");
+
+    //Quickest Turnaround (Pad)
+    createRankingTable("R16:T25", "#quickest-turnaround-pad");
+
+    //Quickest Turnaround (Mission to Mission)
+    createRankingTable("R28:T37", "#quickest-turnaround-mission");
+
 });

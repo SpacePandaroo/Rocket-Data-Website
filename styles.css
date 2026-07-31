@@ -10,10 +10,14 @@
     --muted: #9ca3b8;
 
     /* Aurora colors */
-    --accent: #8b5cf6;        /* Purple */
-    --accent-blue: #38bdf8;   /* Blue */
-    --accent-green: #34d399;  /* Green */
-    --accent-red: #fb7185;    /* Red/Pink */
+    --accent: #8b5cf6;
+    /* Purple */
+    --accent-blue: #38bdf8;
+    /* Blue */
+    --accent-green: #34d399;
+    /* Green */
+    --accent-red: #fb7185;
+    /* Red/Pink */
 
     --accent-dark: #241638;
     --border: #3b3850;
@@ -169,7 +173,7 @@ body {
 
 .records-grid .card:last-child {
     grid-column: auto;
-    
+
 }
 
 .record-grid.consecutive-successes {
@@ -262,6 +266,174 @@ td:last-child {
     text-align: center;
     width: 100%;
     margin: 20px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.vehicle-config {
+    margin-top: 15px;
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+
+
+.family-card {
+    cursor: pointer;
+}
+
+/* =======================================
+   Vehicle Modal
+======================================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 1000;
+
+}
+
+.modal.hidden {
+
+    display: none;
+
+}
+
+.modal-content {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    width: 80%;
+
+    max-width: 900px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+}
+
+#close-modal {
+
+    float: right;
+
+    background: transparent;
+
+    border: none;
+
+    color: var(--text);
+
+    font-size: 1.8rem;
+
+    cursor: pointer;
+
+}
+
+#close-modal:hover {
+
+    color: var(--accent-red);
+
+}
+
+/* =======================================
+   Vehicle Cards
+======================================= */
+
+.family-card {
+
+    cursor: pointer;
+
+}
+
+.family-card:hover {
+
+    border-color: var(--accent);
+
+    transform: translateY(-2px);
+
+}
+
+.vehicle-config {
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: rgba(4, 6, 13, 0.35);
+
+}
+
+.vehicle-config h3 {
+
+    margin-top: 0;
+
+    color: var(--accent-blue);
+
+}
+
+/* =======================================
+   Family Summary At Top Of Popup
+======================================= */
+
+.family-summary {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin: 20px 0;
+
+    text-align: left;
+
+}
+
+.family-summary p {
+
+    margin: 0;
+
+    padding: 10px;
+
+    background: rgba(4, 6, 13, 0.35);
+
+    border-radius: 8px;
+
+}
+
+.modal-content hr {
+
+    border: none;
+
+    border-top: 1px solid var(--border);
+
+    margin: 20px 0;
+
 }
 
 @media (max-width: 768px) {

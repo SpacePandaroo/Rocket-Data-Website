@@ -6,7 +6,7 @@ const SHEET_ID = "15f0ig9CIZE-m705V-9YRzQBVwJ3Bbj0wvFU0y9zarlU";
 const GID = "0";
 
 const CSV_URL =
-    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${LAUNCH_SHEET_GID}`;
 
 // =======================================
 // Helpers
@@ -42,8 +42,9 @@ function normalizeHeader(value) {
         .trim();
 }
 
+// Returns true if a value contains non-empty text.
 function hasText(value) {
-    return value !== null && value !== undefined && String(value).trim() !== "";
+    return String(value ?? "").trim() !== "";
 }
 
 function parseLaunchDate(value) {
@@ -222,7 +223,7 @@ function populateCountryCards(countryEntries, launchEntries) {
 // Load Sheet
 // =======================================
 
-async function loadSheet() {
+async function loadLaunchSheet() {
     Papa.parse(CSV_URL, {
         download: true,
         skipEmptyLines: true,
@@ -303,7 +304,7 @@ function buildTable(data) {
 // Start
 // =======================================
 
-loadSheet();
+loadLaunchSheet();
 
 const COUNTRY_CARD_DEFINITIONS = [
     {
