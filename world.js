@@ -6,7 +6,7 @@ const SHEET_ID = "15f0ig9CIZE-m705V-9YRzQBVwJ3Bbj0wvFU0y9zarlU";
 const GID = "0";
 
 const CSV_URL =
-    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${LAUNCH_SHEET_GID}`;
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 
 // =======================================
 // Helpers
