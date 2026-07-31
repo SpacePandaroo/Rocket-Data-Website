@@ -54,7 +54,8 @@ const VEHICLE_COLUMNS = {
     lifespan: 10,         // K
     yearsActive: 11,      // L
     firstLaunch: 12,      // M
-    lastLaunch: 13        // N
+    averageTurnaround: 13,  // N
+    lastLaunch: 14        // O
 
 };
 
@@ -464,239 +465,142 @@ function buildVehicleCards(rows) {
 
 }
 
-
 // =======================================
 // Vehicle Detail Popup
 // =======================================
 
 function openVehicleModal(family, vehicles) {
 
-
-    const modal =
-        document.getElementById(
-            "vehicle-modal"
-        );
-
-
-    const body =
-        document.getElementById(
-            "modal-body"
-        );
-
+    const modal = document.getElementById("vehicle-modal");
+    const body = document.getElementById("modal-body");
 
     const familyInfo = {
+        lifespan: vehicles
+            .map(row => row[VEHICLE_COLUMNS.lifespan])
+            .filter(hasText)[0] || "N/A",
 
-        lifespan:
-            vehicles
-                .map(row => row[VEHICLE_COLUMNS.lifespan])
-                .filter(hasText)[0] || "N/A",
+        firstLaunch: vehicles
+            .map(row => parseLaunchDate(row[VEHICLE_COLUMNS.firstLaunch]))
+            .filter(Boolean)
+            .sort((a, b) => a - b)[0],
 
-
-        firstLaunch:
-            vehicles
-                .map(row => parseLaunchDate(row[VEHICLE_COLUMNS.firstLaunch]))
-                .filter(Boolean)
-                .sort((a, b) => a - b)[0],
-
-
-        lastLaunch:
-            vehicles
-                .map(row => parseLaunchDate(row[VEHICLE_COLUMNS.lastLaunch]))
-                .filter(Boolean)
-                .sort((a, b) => b - a)[0]
-
+        lastLaunch: vehicles
+            .map(row => parseLaunchDate(row[VEHICLE_COLUMNS.lastLaunch]))
+            .filter(Boolean)
+            .sort((a, b) => b - a)[0]
     };
 
     const activeYears = vehicles
         .flatMap(row => [
-
             row[VEHICLE_COLUMNS.firstLaunch],
             row[VEHICLE_COLUMNS.lastLaunch]
-
         ])
         .map(date => parseLaunchDate(date))
         .filter(Boolean)
         .map(date => date.getFullYear());
 
-
-    const familyYears =
-        activeYears.length
-            ? `${Math.min(...activeYears)} - ${Math.max(...activeYears)}`
-            : "N/A";
-
-
+    const familyYears = activeYears.length
+        ? `${Math.min(...activeYears)} - ${Math.max(...activeYears)}`
+        : "N/A";
 
     let html = `
-
-        <h2>
-            ${family} Family
-        </h2>
-
+        <h2>${family} Family</h2>
 
         <div class="family-summary">
-
-
+            <p><strong>Lifespan:</strong> ${familyInfo.lifespan}</p>
+            <p><strong>Years Active:</strong> ${familyYears}</p>
             <p>
-                <strong>Lifespan:</strong>
-                ${familyInfo.lifespan}
+                <strong>First Launch:</strong> 
+                ${familyInfo.firstLaunch 
+                    ? familyInfo.firstLaunch.toLocaleString("en-US", { timeZone: "UTC" }) + " UTC" 
+                    : "N/A"}
             </p>
-
-
             <p>
-                <strong>Years Active:</strong>
-                ${familyYears}
+                <strong>Last Launch:</strong> 
+                ${familyInfo.lastLaunch 
+                    ? familyInfo.lastLaunch.toLocaleString("en-US", { timeZone: "UTC" }) + " UTC" 
+                    : "N/A"}
             </p>
-
-
-            <p>
-                <strong>First Launch:</strong>
-                ${familyInfo.firstLaunch
-            ? familyInfo.firstLaunch.toLocaleString("en-US", {
-                timeZone: "UTC"
-            }) + " UTC"
-            : "N/A"}
-            </p>
-
-
-            <p>
-                <strong>Last Launch:</strong>
-                ${familyInfo.lastLaunch
-            ? familyInfo.lastLaunch.toLocaleString("en-US", {
-                timeZone: "UTC"
-            }) + " UTC"
-            : "N/A"}
-            </p>
-
-
         </div>
-
 
         <hr>
 
-
-        <h3>
-            Configurations
-        </h3>
-
+        <h3>Configurations</h3>
     `;
-
-
 
     vehicles.forEach(row => {
 
+        const launches = parseNumericValue(row[VEHICLE_COLUMNS.launches]);
+        const success = parseNumericValue(row[VEHICLE_COLUMNS.success]);
+        const partial = parseNumericValue(row[VEHICLE_COLUMNS.partial]);
+        const failure = parseNumericValue(row[VEHICLE_COLUMNS.failure]);
+        const weighted = success + (partial * 0.5);
 
+        const rate = launches
+            ? ((weighted / launches) * 100).toFixed(2)
+            : "0.00";
 
-        const launches =
-            parseNumericValue(
-                row[VEHICLE_COLUMNS.launches]
-            );
+        // Parse individual configuration dates
+        const configFirst = parseLaunchDate(row[VEHICLE_COLUMNS.firstLaunch]);
+        const configLast = parseLaunchDate(row[VEHICLE_COLUMNS.lastLaunch]);
 
+        const formattedFirst = configFirst 
+            ? configFirst.toLocaleString("en-US", { timeZone: "UTC" }) + " UTC"
+            : "N/A";
 
-        const success =
-            parseNumericValue(
-                row[VEHICLE_COLUMNS.success]
-            );
-
-
-        const partial =
-            parseNumericValue(
-                row[VEHICLE_COLUMNS.partial]
-            );
-
-
-        const failure =
-            parseNumericValue(
-                row[VEHICLE_COLUMNS.failure]
-            );
-
-
-        const weighted =
-            success + (partial * 0.5);
-
-
-
-        const rate =
-            launches
-                ? ((weighted / launches) * 100)
-                    .toFixed(2)
-                : "0.00";
-
-
+        const formattedLast = configLast 
+            ? configLast.toLocaleString("en-US", { timeZone: "UTC" }) + " UTC"
+            : "N/A";
 
         html += `
-
-
         <div class="vehicle-config">
 
-
-            <h3>
-                ${row[VEHICLE_COLUMNS.configuration]}
-            </h3>
-
+            <h3>${row[VEHICLE_COLUMNS.configuration]}</h3>
 
             <p>
-                Sub Family:
-                ${row[VEHICLE_COLUMNS.subFamily] || "N/A"}
+                Sub Family: ${row[VEHICLE_COLUMNS.subFamily] || "N/A"}
             </p>
-
 
             <p>
-                Status:
-                ${row[VEHICLE_COLUMNS.status] || "Unknown"}
+                Status: ${row[VEHICLE_COLUMNS.status] || "Unknown"}
             </p>
-
 
             <p>
-                Launches:
-                ${launches}
+                First Launch: ${formattedFirst}
             </p>
-
 
             <p>
-                Success:
-                ${success}
+                Last Launch: ${formattedLast}
             </p>
-
 
             <p>
-                Partial:
-                ${partial}
+                Launches: ${launches}
             </p>
-
 
             <p>
-                Failure:
-                ${failure}
+                Success: ${success}
             </p>
-
 
             <p>
-                Success Rate:
-                ${rate}%
+                Partial: ${partial}
             </p>
 
+            <p>
+                Failure: ${failure}
+            </p>
+
+            <p>
+                Success Rate: ${rate}%
+            </p>
 
         </div>
-
-
         `;
-
 
     });
 
-
-
-    body.innerHTML =
-        html;
-
-
-
-    modal.classList.remove(
-        "hidden"
-    );
-
+    body.innerHTML = html;
+    modal.classList.remove("hidden");
 }
-
 
 // =======================================
 // Load Launch Sheet
