@@ -215,14 +215,16 @@ function buildRecentLaunches(launches) {
 
     list.innerHTML = "";
 
-    if (recentRows.length === 0) {
+    // FIXED: Changed recentRows -> recent
+    if (recent.length === 0) {
         const li = document.createElement("li");
         li.textContent = "No launches in the last 7 days";
         list.appendChild(li);
         return;
     }
 
-    recentRows.forEach(entry => {
+    // FIXED: Changed recentRows -> recent
+    recent.forEach(entry => {
         const li = document.createElement("li");
 
         const titleParts = [entry.date, entry.missionName].filter(hasText);
