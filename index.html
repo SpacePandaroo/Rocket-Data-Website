@@ -2,98 +2,96 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Rocket Data Website</title>
-	<!-- Load the main site stylesheet for layout, colors, and typography -->
-	<link rel="stylesheet" href="styles.css" />
-	<!-- Load PapaParse to convert the Google Sheet CSV into usable data -->
-	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-	<!-- Defer loading of the JavaScript so the HTML renders before the script runs -->
-	<script defer src="world.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rocket Data Website</title>
+    <!-- Load the main site stylesheet for layout, colors, and typography -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Load PapaParse to convert the Google Sheet CSV into usable data -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <!-- Defer loading of the JavaScript so the HTML renders before the script runs -->
+    <script defer src="world.js"></script>
 </head>
 
 <body>
-	<!-- Page wrapper keeps the content centered and limits width -->
-	<div class="page">
-		<header class="header">
-			<div class="brand">RocketLaunchHistory</div>
-			<nav class="nav">
-				<!-- Navigation links to other pages on the site -->
-				<a href="#">Home</a>
-				<a href="worldrecords.html">Records</a>
-				<a href="about.html">About</a>
-			</nav>
-		</header>
+    <!-- Page wrapper keeps the content centered and limits width -->
+    <div class="page">
+        <header class="header">
+            <div class="brand">RocketLaunchHistory</div>
+            <nav class="nav">
+                <!-- Navigation links to other pages on the site -->
+                <a href="#">Home</a>
+                <a href="worldrecords.html">Records</a>
+                <a href="about.html">About</a>
+            </nav>
+        </header>
 
-		<main class="main">
-			<section class="stats-row">
-				<!-- Stats row shows the total launch count and recent launches -->
-				<div class="card stat-card">
-					<h2>Total Launch Count</h2>
-					<p class="stat-number" id="total-count">AWAITING API DATA</p>
-					<p>Across all spaceflight programs</p>
-				</div>
-				<div class="card stat-card recent-launches-card">
-					<h2>Recent Launches (UTC Time/Date Displayed)
+        <main class="main">
+            <section class="stats-row">
+                <!-- Stats row shows the total launch count and recent launches -->
+                <div class="card stat-card">
+                    <h2>Total Launch Count</h2>
+                    <p class="stat-number" id="total-count">AWAITING API DATA</p>
+                    <p>Across all spaceflight programs</p>
+                </div>
+                <div class="card stat-card recent-launches-card">
+                    <h2>Recent Launches (UTC Time/Date Displayed)</h2>
+                    <ul class="launch-list" id="recent-launches"></ul>
+                </div>
+            </section>
 
-					</h2>
-					<ul class="launch-list" id="recent-launches"></ul>
-				</div>
-			</section>
+            <section class="content-grid">
+                <!-- Country cards are updated by world.js with summary data for each region -->
+                <div class="card country-card" data-country="United States">
+                    <h2>United States</h2>
+                    <p>Launching Since 1957</p>
+                    <p class="country-summary">Loading...</p>
+                    <a href="UnitedStates/" class="btn">Dive In Deeper</a>
+                </div>
 
-			<section class="content-grid">
-				<!-- Country cards are updated by script.js with summary data for each region -->
-				<div class="card country-card" data-country="United States">
-					<h2>United States</h2>
-					<p>Launching Since 1957</p>
-					<p class="country-summary">Loading...</p>
-					<a href="/UnitedStates/"><button class="btn">Dive In Deeper</button></a>
-				</div>
+                <div class="card country-card" data-country="Russia/Former Soviet Union">
+                    <h2>Russia/Former Soviet Union</h2>
+                    <p>Launching Since 1957</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
 
-				<div class="card country-card" data-country="Russia/Former Soviet Union">
-					<h2>Russia/Former Soviet Union</h2>
-					<p>Launching Since 1957</p>
-					<p class="country-summary">Loading...</p>
-				</div>
+                <div class="card country-card" data-country="Europe">
+                    <h2>Europe</h2>
+                    <p>Launching Since 1965</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
 
-				<div class="card country-card" data-country="Europe">
-					<h2>Europe</h2>
-					<p>Launching Since 1965</p>
-					<p class="country-summary">Loading...</p>
-				</div>
+                <div class="card country-card" data-country="Japan">
+                    <h2>Japan</h2>
+                    <p>Launching Since 1966</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
 
-				<div class="card country-card" data-country="Japan">
-					<h2>Japan</h2>
-					<p>Launching Since 1966</p>
-					<p class="country-summary">Loading...</p>
-				</div>
+                <div class="card country-card" data-country="China">
+                    <h2>China</h2>
+                    <p>Launching Since 1970</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
 
-				<div class="card country-card" data-country="China">
-					<h2>China</h2>
-					<p>Launching Since 1970</p>
-					<p class="country-summary">Loading...</p>
-				</div>
+                <div class="card country-card" data-country="India">
+                    <h2>India</h2>
+                    <p>Launching Since 1979</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
 
-				<div class="card country-card" data-country="India">
-					<h2>India</h2>
-					<p>Launching Since 1979</p>
-					<p class="country-summary">Loading...</p>
-				</div>
+                <div class="card country-card" data-country="Minor Space Nations">
+                    <h2>Minor Space Nations</h2>
+                    <p>Launching Since 1988</p>
+                    <p class="country-summary">Loading...</p>
+                </div>
+            </section>
+        </main>
 
-				<div class="card country-card" data-country="Minor Space Nations">
-					<h2>Minor Space Nations</h2>
-					<p>Launching Since 1988</p>
-					<p class="country-summary">Loading...</p>
-				</div>
-			</section>
-		</main>
-
-		<footer class="footer">
-			<p>Rocket Launch History by SpacePandaroo </p>
-			<p>Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
-		</footer>
-	</div>
+        <footer class="footer">
+            <p>Rocket Launch History by SpacePandaroo</p>
+            <p>Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
+        </footer>
+    </div>
 </body>
 
 </html>

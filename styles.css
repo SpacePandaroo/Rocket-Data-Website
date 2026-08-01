@@ -1,3 +1,6 @@
+/* =======================================
+   Imports & Custom Properties
+   ======================================= */
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap');
 
 :root {
@@ -9,20 +12,19 @@
     --text: #f5f3ff;
     --muted: #9ca3b8;
 
-    /* Aurora colors */
-    --accent: #8b5cf6;
-    /* Purple */
-    --accent-blue: #38bdf8;
-    /* Blue */
-    --accent-green: #34d399;
-    /* Green */
-    --accent-red: #fb7185;
-    /* Red/Pink */
+    /* Aurora Accent Palette */
+    --accent: #8b5cf6;       /* Purple */
+    --accent-blue: #38bdf8;  /* Blue */
+    --accent-green: #34d399; /* Green */
+    --accent-red: #fb7185;   /* Red/Pink */
 
     --accent-dark: #241638;
     --border: #3b3850;
 }
 
+/* =======================================
+   Global Resets & Base Typography
+   ======================================= */
 * {
     box-sizing: border-box;
 }
@@ -43,6 +45,9 @@ body {
     overflow-x: hidden;
 }
 
+/* =======================================
+   Layout & Navigation
+   ======================================= */
 .page {
     max-width: 1200px;
     margin: 0 auto;
@@ -78,6 +83,37 @@ body {
     gap: 12px;
 }
 
+.footer {
+    text-align: center;
+    padding: 24px 0 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Page Specific & Helpers */
+.about-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.page-title {
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =======================================
+   Hero Banner & Buttons
+   ======================================= */
 .hero {
     background: linear-gradient(135deg, rgba(12, 13, 22, 0.95), rgba(111, 91, 134, 0.22));
     color: white;
@@ -124,6 +160,9 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
 }
 
+/* =======================================
+   Grids & Cards Layout
+   ======================================= */
 .stats-row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -169,16 +208,22 @@ body {
     gap: 20px;
     justify-items: center;
     padding-right: 8px;
+    align-items: stretch;
 }
 
 .records-grid .card:last-child {
     grid-column: auto;
-
 }
 
 .record-grid.consecutive-successes {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+.record-grid.consecutive-successes .card,
+.records-grid .card {
+    height: 100%;
 }
 
 .card {
@@ -203,6 +248,9 @@ body {
     justify-content: center;
 }
 
+/* =======================================
+   Tables
+   ======================================= */
 table {
     width: 100%;
     table-layout: fixed;
@@ -235,207 +283,94 @@ td:last-child {
     padding-right: 8px;
 }
 
-.record-grid.consecutive-successes,
-.records-grid {
-    align-items: stretch;
-}
-
-.record-grid.consecutive-successes .card,
-.records-grid .card {
-    height: 100%;
-}
-
-.footer {
-    text-align: center;
-    padding: 24px 0 8px;
-    color: var(--muted);
-    font-size: 0.95rem;
-}
-
-.about-page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.page-title {
-    text-align: center;
-    width: 100%;
-    margin: 20px 0;
-}
-
-.hidden {
-    display: none;
-}
-
-
-.vehicle-config {
-    margin-top: 15px;
-    padding: 15px;
-    border-top: 1px solid #ccc;
-}
-
-
+/* =======================================
+   Vehicle Components
+   ======================================= */
 .family-card {
     cursor: pointer;
-}
-
-/* =======================================
-   Vehicle Modal
-======================================= */
-
-.modal {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.75);
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 1000;
-
-}
-
-.modal.hidden {
-
-    display: none;
-
-}
-
-.modal-content {
-
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-
-    border-radius: 16px;
-
-    padding: 25px;
-
-    width: 80%;
-
-    max-width: 900px;
-
-    max-height: 80vh;
-
-    overflow-y: auto;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-
-}
-
-#close-modal {
-
-    float: right;
-
-    background: transparent;
-
-    border: none;
-
-    color: var(--text);
-
-    font-size: 1.8rem;
-
-    cursor: pointer;
-
-}
-
-#close-modal:hover {
-
-    color: var(--accent-red);
-
-}
-
-/* =======================================
-   Vehicle Cards
-======================================= */
-
-.family-card {
-
-    cursor: pointer;
-
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .family-card:hover {
-
     border-color: var(--accent);
-
     transform: translateY(-2px);
-
 }
 
 .vehicle-config {
-
     margin-top: 15px;
-
     padding: 15px;
-
     border: 1px solid var(--border);
-
     border-radius: 10px;
-
     background: rgba(4, 6, 13, 0.35);
-
 }
 
 .vehicle-config h3 {
-
     margin-top: 0;
-
     color: var(--accent-blue);
-
 }
 
 /* =======================================
-   Family Summary At Top Of Popup
-======================================= */
-
-.family-summary {
-
-    display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    margin: 20px 0;
-
-    text-align: left;
-
+   Vehicle Modal & Popups
+   ======================================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.family-summary p {
-
-    margin: 0;
-
-    padding: 10px;
-
-    background: rgba(4, 6, 13, 0.35);
-
-    border-radius: 8px;
-
+.modal-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    width: 80%;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content hr {
-
     border: none;
-
     border-top: 1px solid var(--border);
-
     margin: 20px 0;
-
 }
 
+#close-modal {
+    float: right;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+#close-modal:hover {
+    color: var(--accent-red);
+}
+
+.family-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.family-summary p {
+    margin: 0;
+    padding: 10px;
+    background: rgba(4, 6, 13, 0.35);
+    border-radius: 8px;
+}
+
+/* =======================================
+   Responsive Breakpoints
+   ======================================= */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
