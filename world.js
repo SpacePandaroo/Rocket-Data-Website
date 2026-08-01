@@ -12,7 +12,7 @@ const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?forma
 const COLUMN_INDICES = {
     countryCount: 1,    // Column B: Aggregated launch count per region
     country: 5,         // Column F: Launch origin country
-    date: 6,            // Column G: Launch date timestamp
+    date: 6,            // Column G: Launch date timestamp (UTC)
     vehicleFamily: 8,   // Column I: Rocket main family
     vehicleSub: 9,      // Column J: Rocket sub-variant
     vehicleConfig: 10,  // Column K: Rocket detailed configuration
