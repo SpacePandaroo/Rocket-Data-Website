@@ -94,9 +94,10 @@ function parseLaunchDate(value) {
     const dateOnlyMatch = raw.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
     if (dateOnlyMatch) {
         const year = parseInt(dateOnlyMatch[1], 10);
-        const month = parseInt(dateOnlyMatch[2], 10) - 1; // 0-indexed month
+        const month = parseInt(dateOnlyMatch[2], 10) - 1;
         const day = parseInt(dateOnlyMatch[3], 10);
-        return new Date(Date.UTC(year, month, day, 12, 0, 0));
+        // Set to start of UTC day so it isn't treated as future time
+        return new Date(Date.UTC(year, month, day, 0, 0, 0));
     }
 
     // Standard JavaScript fallback for full date-time strings
@@ -185,27 +186,31 @@ function getLatestLaunch(entries) {
 /**
  * Renders the 7-day launch history list in the "Recent Launches" UI card.
  */
-function buildRecentLaunches(data) {
+function buildRecentLaunches(launches) {
     const list = document.getElementById("recent-launches");
     if (!list) return;
 
     const now = new Date();
+    
+    // Set end of today (23:59:59.999) as upper bound
+    const endOfToday = new Date(now);
+    endOfToday.setHours(23, 59, 59, 999);
+
+    // Set 7 days prior as lower bound
     const cutoff = new Date(now);
     cutoff.setDate(now.getDate() - 7);
+    cutoff.setHours(0, 0, 0, 0);
 
-    // Filter launches occurring within the past 7 days up to the current date
-    const recentRows = data
+    const recent = launches
         .map(entry => ({
             ...entry,
             parsedDate: parseLaunchDate(entry.date)
         }))
-        .filter(entry => {
-            return (
-                entry.parsedDate &&
-                entry.parsedDate >= cutoff &&
-                entry.parsedDate <= now
-            );
-        })
+        .filter(entry => (
+            entry.parsedDate &&
+            entry.parsedDate >= cutoff &&
+            entry.parsedDate <= endOfToday
+        ))
         .sort((a, b) => b.parsedDate - a.parsedDate);
 
     list.innerHTML = "";
