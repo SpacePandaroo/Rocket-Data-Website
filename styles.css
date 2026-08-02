@@ -248,6 +248,39 @@ body {
     justify-content: center;
 }
 
+/* Center only this specific section */
+.country-grid-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Apply flat styling strictly to these cards */
+.country-card.flat-card {
+  flex: 0 0 320px;       /* Overrides 1 1 0 without touching other cards */
+  padding: 1rem 1.25rem; /* Reduces height */
+  text-align: center;
+}
+
+/* Tighten spacing inside flat cards only */
+.country-card.flat-card h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.country-card.flat-card p {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.country-card.flat-card .btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+}
+
 /* =======================================
    Tables
    ======================================= */
