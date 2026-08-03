@@ -30,6 +30,32 @@
                 <div class="card country-card">
                     <h1 style="text-align: center;">Starship Program Dashboard</h1>
                     <p style="text-align: center;">Track hardware developments, test milestones, and launch logs for the Starship program.</p>
+                    
+                    <!-- Live Hardware Stats Summary -->
+                    <div id="program-summary-stats" class="summary-stats-bar">
+                        <div class="summary-stat-item">
+                            <span class="summary-stat-value" id="stat-ships-built">--</span>
+                            <span class="summary-stat-label">Ships Built / In Production</span>
+                        </div>
+                        <div class="summary-stat-item">
+                            <span class="summary-stat-value" id="stat-boosters-built">--</span>
+                            <span class="summary-stat-label">Boosters Built / In Production</span>
+                        </div>
+                        <div class="summary-stat-item">
+                            <span class="summary-stat-value" id="stat-flights-count">--</span>
+                            <span class="summary-stat-label">Total Flights</span>
+                        </div>
+                        <div class="stat-box">
+                            <span id="stat-suborbital-count" class="stat-number">0</span>
+                            <span class="stat-label">Suborbital Flights</span>
+                        </div>
+
+                        <div class="stat-box">
+                            <span id="stat-integrated-count" class="stat-number">0</span>
+                            <span class="stat-label">Integrated Flights</span>
+                        </div>
+                    </div>
+
                     <a href="../UnitedStates/" class="btn">&larr; Return to United States</a>
                 </div>
             </section>

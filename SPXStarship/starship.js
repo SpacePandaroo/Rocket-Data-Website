@@ -45,6 +45,8 @@ const SHIP_BOOSTER_COLUMNS = {
 
 // Column indices matching Flight History sheet (0-indexed: A=0, B=1...):
 const FLIGHT_COLUMNS = {
+    integratedFlight: 2,// Col C
+    suborbitalFlight: 3,// Col D
     utcTime: 5,         // Col F
     version: 9,         // Col J
     s1Serial: 10,       // Col K
@@ -232,6 +234,90 @@ function buildCards(type, rows) {
 }
 
 // =======================================
+// Top Header Stats Calculator
+// =======================================
+
+function fetchHeaderSummaryStats() {
+    const shipEl = document.getElementById("stat-ships-built");
+    const boosterEl = document.getElementById("stat-boosters-built");
+    const flightEl = document.getElementById("stat-flights-count");
+    const suborbitalEl = document.getElementById("stat-suborbital-count");
+    const integratedEl = document.getElementById("stat-integrated-count");
+
+    // Helper fetch function that populates cache & returns rows
+    function loadDataset(type, callback) {
+        if (cache[type]) {
+            callback(cache[type]);
+            return;
+        }
+        Papa.parse(`${SHEET_BASE_URL}${CONFIG[type].gid}`, {
+            download: true,
+            skipEmptyLines: true,
+            complete(results) {
+                const rows = results.data || [];
+                cache[type] = rows.slice(1).filter(row => row && row.some(hasText));
+                callback(cache[type]);
+            }
+        });
+    }
+
+    // 1. Calculate Ships Built
+    loadDataset("ship", (rows) => {
+        const ships = rows.filter(row => {
+            const serial = row[SHIP_BOOSTER_COLUMNS.serial];
+            return hasText(serial) && serial.toLowerCase() !== "serial";
+        });
+        if (shipEl) shipEl.textContent = ships.length;
+    });
+
+    // 2. Calculate Boosters Built
+    loadDataset("booster", (rows) => {
+        const boosters = rows.filter(row => {
+            const serial = row[SHIP_BOOSTER_COLUMNS.serial];
+            return hasText(serial) && serial.toLowerCase() !== "serial";
+        });
+        if (boosterEl) boosterEl.textContent = boosters.length;
+    });
+
+    // 3. Calculate Flight Counts across all row data
+    loadDataset("flight", (rows) => {
+        let totalFlights = 0;
+        let suborbitalCount = 0;
+        let integratedCount = 0;
+
+        rows.forEach(row => {
+            const rowText = row.join(" ").toUpperCase();
+
+            // 1. Skip empty rows, table headers, or category labels
+            if (
+                !rowText.trim() || 
+                rowText.includes("MISSION NAME") || 
+                rowText.includes("FLIGHT TYPE") || 
+                rowText.includes("INTEGRATED FLIGHT TEST") && !/\bIFT\b/.test(rowText) ||
+                rowText.includes("SUBORBITAL TEST") && !/\bSN\d+\b/.test(rowText)
+            ) {
+                return;
+            }
+
+            // 2. Check for Integrated Flight Tests FIRST (matches "IFT", "IFT-1", etc.)
+            if (/\bIFT\b/.test(rowText) || rowText.includes("INTEGRATED")) {
+                integratedCount++;
+                totalFlights++;
+            } 
+            // 3. Check for Suborbital Tests (matches "SN8", "SN9", "SN10", etc.)
+            else if (/\bSN\d+\b/.test(rowText) || rowText.includes("SUBORBITAL")) {
+                suborbitalCount++;
+                totalFlights++;
+            }
+        });
+
+        if (flightEl) flightEl.textContent = totalFlights;
+        if (suborbitalEl) suborbitalEl.textContent = suborbitalCount;
+        if (integratedEl) integratedEl.textContent = integratedCount;
+    });
+}
+
+// =======================================
 // Modal & Data Controllers
 // =======================================
 
@@ -285,6 +371,9 @@ function closeModal(modalId) {
 // =======================================
 
 function initEvents() {
+    // Fetch banner summary stats immediately on init
+    fetchHeaderSummaryStats();
+
     ["ship", "booster", "flight"].forEach(type => {
         const typeConfig = CONFIG[type];
         const cardTarget = document.getElementById(typeConfig.openBtnId);
