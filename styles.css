@@ -152,12 +152,16 @@ body {
     text-decoration: none;
     font-weight: 700;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    border: 1px solid var(--border);
+    cursor: pointer;
 }
 
 .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+    background: var(--accent-dark);
+    border-color: var(--accent);
 }
 
 /* =======================================
@@ -228,7 +232,7 @@ body {
 
 .card {
     background: rgba(11, 18, 32, 0.85);
-    padding: 12px;
+    padding: 16px;
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -248,14 +252,147 @@ body {
     justify-content: center;
 }
 
-/* Center only this specific section */
 .country-grid-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  max-width: 900px;
-  margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.single-card {
+    grid-template-columns: 1fr;
+    margin-bottom: 20px;
+}
+
+/* =======================================
+   Ship Cards & Badges Inside Modal
+   ======================================= */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    padding: 0.5rem 0;
+}
+
+.ship-card {
+    background: rgba(4, 6, 13, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    height: 100%; /* Force all cards in a row to match height */
+}
+
+.ship-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.ship-card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    min-height: auto;
+    justify-content: flex-start;
+    color: var(--text);
+}
+
+.status-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Theme-matched status badges */
+.status-active { 
+    background-color: rgba(52, 211, 153, 0.15); 
+    color: var(--accent-green); 
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+.status-retired { 
+    background-color: rgba(56, 189, 248, 0.15); 
+    color: var(--accent-blue); 
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+.status-scrapped { 
+    background-color: rgba(251, 113, 133, 0.15); 
+    color: var(--accent-red); 
+    border: 1px solid rgba(251, 113, 133, 0.3);
+}
+.status-default { 
+    background-color: rgba(156, 163, 184, 0.15); 
+    color: var(--muted); 
+    border: 1px solid rgba(156, 163, 184, 0.3);
+}
+
+.ship-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Pushes content down evenly */
+}
+
+.ship-card-body p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.milestones-grid {
+    margin-top: auto; /* Keeps milestone grid locked to the bottom area */
+    margin-bottom: 0.5rem;
+    background: rgba(4, 6, 13, 0.5);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 56, 80, 0.5);
+}
+
+.milestone-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin: 0.3rem 0;
+}
+
+.milestone-label { 
+    font-weight: 500; 
+    color: var(--muted); 
+}
+
+.milestone-value {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.ship-notes { 
+    font-size: 0.85rem; 
+    font-style: italic; 
+    color: var(--muted);
+    margin-top: 0.25rem;
+    min-height: 2.2em; /* Reserve 2 lines of space for layout consistency */
+    line-height: 1.15;
+    overflow: hidden;
+}
+
+.loading-notice, .empty-notice, .error-notice {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+}
+
+.error-notice {
+    color: var(--accent-red);
 }
 
 /* =======================================
@@ -320,16 +457,19 @@ td:last-child {
 }
 
 /* =======================================
-   Vehicle Modal & Popups
+   Modals & Popups
    ======================================= */
+.modal-overlay,
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(2, 4, 10, 0.85);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
 }
 
 .modal-content {
@@ -337,30 +477,56 @@ td:last-child {
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 25px;
-    width: 80%;
-    max-width: 900px;
-    max-height: 80vh;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.close-btn,
+#close-modal {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.close-btn:hover,
+#close-modal:hover {
+    color: var(--accent-red);
+}
+
+.modal-body {
+    padding-top: 15px;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    flex: 1;
 }
 
 .modal-content hr {
     border: none;
     border-top: 1px solid var(--border);
     margin: 20px 0;
-}
-
-#close-modal {
-    float: right;
-    background: transparent;
-    border: none;
-    color: var(--text);
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-#close-modal:hover {
-    color: var(--accent-red);
 }
 
 .family-summary {
@@ -395,5 +561,10 @@ td:last-child {
 
     .content-grid {
         grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        padding: 15px;
+        max-height: 90vh;
     }
 }

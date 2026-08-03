@@ -2,52 +2,120 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>United States Spaceflight</title>
-
+    <title>United States Spaceflight - Starship Tracker</title>
     <link rel="stylesheet" href="../styles.css" />
-
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="starship.js" defer></script>
 </head>
-
 
 <body>
 
     <div class="page">
 
         <header class="header">
-
-            <div class="brand">
-                RocketLaunchHistory
-            </div>
-
+            <div class="brand">RocketLaunchHistory</div>
             <nav class="nav">
-
-                <a href="../index.html">
-                    Home
-                </a>
-
-                <a href="../worldrecords.html">
-                    Records
-                </a>
-
-                <a href="../about.html">
-                    About
-                </a>
-
+                <a href="../index.html">Home</a>
+                <a href="../worldrecords.html">Records</a>
+                <a href="../about.html">About</a>
             </nav>
-
         </header>
 
-        <section class="content-grid">
-            <div class="card country-card">
-                <h2>Back to United States</h2>
-                <a href="../UnitedStates/" class="btn">Return to United States</a>
-            </div>
-        </section>
+        <main class="main">
 
+            <!-- Title Header Card -->
+            <section class="stats-row single-card">
+                <div class="card country-card">
+                    <h1 style="text-align: center;">Starship Program Dashboard</h1>
+                    <p style="text-align: center;">Track hardware developments, test milestones, and launch logs for the Starship program.</p>
+                    <a href="../UnitedStates/" class="btn">&larr; Return to United States</a>
+                </div>
+            </section>
+
+            <!-- Production Logs Section -->
+            <h2 class="title" style="text-align: center;">Starship & Superheavy Production History
+
+            </h2>
+            <section class="stats-row">
+
+                <!-- Clickable Starship Card -->
+                <div id="open-ship-card" class="card interactive-card clickable">
+                    <h2>Starship Production</h2>
+                    <p>Major Milestones for Starships as they are built and tested.</p>
+                    <span class="btn">Ship Production History &rarr;</span>
+                </div>
+
+                <!-- Clickable Booster Card -->
+                <div id="open-booster-card" class="card interactive-card clickable">
+                    <h2>Superheavy Production</h2>
+                    <p>Major Milestones for the Superheavy booster as they are built and tested.</p>
+                    <span class="btn">Booster Production History &rarr;</span>
+                </div>
+
+            </section>
+
+            <!-- Flight History Section -->
+            <h2 class="title" style="text-align: center; margin-top: 2rem;">Flight History</h2>
+            <section class="stats-row single-card">
+
+                <!-- Clickable Flight History Card -->
+                <div id="open-flight-card" class="card interactive-card clickable">
+                    <h2>Starship Flight Tests</h2>
+                    <p>Complete launch logs, vehicle pairings, launchpad info, and landing outcomes.</p>
+                    <span class="btn">View Flight History &rarr;</span>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Starship Modal Popup -->
+        <div id="ship-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Ship Production History</h2>
+                    <button id="close-ship-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="ship-cards-container" class="cards-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Super Heavy Booster Modal Popup -->
+        <div id="booster-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Booster Production History</h2>
+                    <button id="close-booster-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="booster-cards-container" class="cards-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight History Modal Popup -->
+        <div id="flight-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Flight History</h2>
+                    <button id="close-flight-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="flight-cards-container" class="cards-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Rocket Launch History by SpacePandaroo</p>
+            <p>Data compiled from Gunter's Space Page, NextSpaceflight, and public archives.</p>
+        </footer>
+
+    </div>
 </body>
 
 </html>
