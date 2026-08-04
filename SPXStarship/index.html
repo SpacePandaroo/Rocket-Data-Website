@@ -61,9 +61,7 @@
             </section>
 
             <!-- Production Logs Section -->
-            <h2 class="title" style="text-align: center;">Starship & Superheavy Production History
-
-            </h2>
+            <h2 class="title" style="text-align: center;">Starship & Superheavy Production History</h2>
             <section class="stats-row">
 
                 <!-- Clickable Starship Card -->
@@ -133,6 +131,17 @@
                 <div class="modal-body">
                     <div id="flight-cards-container" class="cards-grid"></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Detailed Vehicle Inspection Modal (Triggered on Card Click) -->
+        <div id="vehicle-detail-modal" class="modal-overlay hidden" style="z-index: 1100;">
+            <div class="modal-content detail-modal-content">
+                <div class="modal-header">
+                    <h2 id="vehicle-detail-title">Vehicle Detail Inspection</h2>
+                    <button id="close-vehicle-detail" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body" id="vehicle-detail-body"></div>
             </div>
         </div>
 
