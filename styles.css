@@ -37,9 +37,9 @@ body {
     min-height: 100vh;
     background-color: #04060a;
     background-image:
-        radial-gradient(circle at 20% 20%, rgba(82, 196, 160, 0.20) 0, rgba(82, 196, 160, 0) 28%),
-        radial-gradient(circle at 80% 15%, rgba(80, 132, 255, 0.18) 0, rgba(80, 132, 255, 0) 30%),
-        radial-gradient(circle at 50% 80%, rgba(142, 93, 255, 0.16) 0, rgba(142, 93, 255, 0) 35%),
+        radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.15) 0, rgba(52, 211, 153, 0) 28%),
+        radial-gradient(circle at 80% 15%, rgba(56, 189, 248, 0.15) 0, rgba(56, 189, 248, 0) 30%),
+        radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.15) 0, rgba(139, 92, 246, 0) 35%),
         linear-gradient(135deg, #03050a 0%, #0a1220 45%, #17162a 100%);
     background-attachment: fixed;
     overflow-x: hidden;
@@ -75,7 +75,7 @@ body {
 }
 
 .nav a:hover {
-    color: var(--accent);
+    color: var(--accent-blue);
 }
 
 .main {
@@ -151,7 +151,7 @@ body {
    Hero Banner & Buttons
    ======================================= */
 .hero {
-    background: linear-gradient(135deg, rgba(12, 13, 22, 0.95), rgba(111, 91, 134, 0.22));
+    background: linear-gradient(135deg, rgba(16, 21, 37, 0.95), rgba(139, 92, 246, 0.22));
     color: white;
     padding: 48px 32px;
     border-radius: 16px;
@@ -161,6 +161,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 .hero h1,
@@ -173,31 +174,34 @@ body {
 .hero h1 {
     margin: 0 0 10px;
     font-size: 2rem;
+    color: var(--text);
 }
 
 .hero p {
     margin: 0 0 20px;
+    color: var(--muted);
 }
 
 .btn {
     display: inline-block;
-    background: #11131a;
+    background: #101525;
     color: #f5f1f9;
     padding: 14px 24px;
     border-radius: 9999px;
     text-decoration: none;
     font-weight: 700;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     border: 1px solid var(--border);
     cursor: pointer;
 }
 
 .btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
     background: var(--accent-dark);
-    border-color: var(--accent);
+    border-color: var(--accent-blue);
+    color: var(--text);
 }
 
 /* =======================================
@@ -267,7 +271,7 @@ body {
 }
 
 .card {
-    background: rgba(11, 18, 32, 0.85);
+    background: rgba(16, 21, 37, 0.85);
     padding: 16px;
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -322,7 +326,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     text-align: left;
-    height: 100%; /* Force all cards in a row to match height */
+    height: 100%;
 }
 
 .ship-card-header {
@@ -376,7 +380,7 @@ body {
 .ship-card-body {
     display: flex;
     flex-direction: column;
-    flex: 1; /* Pushes content down evenly */
+    flex: 1;
 }
 
 .ship-card-body p {
@@ -386,7 +390,7 @@ body {
 }
 
 .milestones-grid {
-    margin-top: auto; /* Keeps milestone grid locked to the bottom area */
+    margin-top: auto;
     margin-bottom: 0.5rem;
     background: rgba(4, 6, 13, 0.5);
     padding: 0.75rem;
@@ -416,7 +420,7 @@ body {
     font-style: italic; 
     color: var(--muted);
     margin-top: 0.25rem;
-    min-height: 2.2em; /* Reserve 2 lines of space for layout consistency */
+    min-height: 2.2em;
     line-height: 1.15;
     overflow: hidden;
 }
@@ -471,12 +475,13 @@ td:last-child {
    ======================================= */
 .family-card {
     cursor: pointer;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .family-card:hover {
-    border-color: var(--accent);
+    border-color: var(--accent-blue);
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(56, 189, 248, 0.15);
 }
 
 .vehicle-config {
@@ -534,6 +539,19 @@ td:last-child {
     margin: 0;
     font-size: 1.5rem;
     color: var(--text);
+}
+
+/* Modal Content Scrolling Fix */
+.detail-modal-content, .modal-content {
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#vehicle-detail-body, #modal-body {
+    overflow-y: auto;
+    max-height: calc(85vh - 80px); /* Leaves room for the modal header */
+    padding-right: 0.5rem;
 }
 
 .close-btn,

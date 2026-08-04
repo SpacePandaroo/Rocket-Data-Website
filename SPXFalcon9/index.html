@@ -2,51 +2,203 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>United States Spaceflight</title>
-
+    <title>United States Spaceflight - Falcon 9</title>
     <link rel="stylesheet" href="../styles.css" />
-
 </head>
-
 
 <body>
 
     <div class="page">
 
         <header class="header">
-
             <div class="brand">
                 RocketLaunchHistory
             </div>
 
             <nav class="nav">
-
-                <a href="../index.html">
-                    Home
-                </a>
-
-                <a href="../worldrecords.html">
-                    Records
-                </a>
-
-                <a href="../about.html">
-                    About
-                </a>
-
+                <a href="../index.html">Home</a>
+                <a href="../worldrecords.html">Records</a>
+                <a href="../about.html">About</a>
             </nav>
-
         </header>
 
-        <section class="content-grid">
-            <div class="card country-card">
+        <!-- TOP NAVIGATION -->
+        <section class="navigation-section" style="margin-bottom: 2rem;">
+            <div class="card country-card" style="max-width: 320px;">
                 <h2>Back to United States</h2>
                 <a href="../UnitedStates/" class="btn">Return to United States</a>
             </div>
         </section>
+
+        <!-- ======================================= -->
+        <!-- TOP STATISTICS DASHBOARD                -->
+        <!-- ======================================= -->
+        <section class="stats-dashboard" style="margin-bottom: 3rem;">
+            <h1 id="total-attempts-header" style="margin-bottom: 1.5rem; text-align: center;">Falcon Program Overview</h1>
+
+            <!-- OVERALL PROGRAM SUMMARY BANNER -->
+            <div class="card stat-card" style="padding: 1.25rem 2rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem; text-align: center;">
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Active Fleet Status</h3>
+                        <span id="stat-active-fleet" style="font-size: 2rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                    </div>
+                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.15);"></div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Most Flown Booster</h3>
+                        <span id="stat-most-flown" style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                    </div>
+                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.15);"></div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Quickest Turnaround</h3>
+                        <span id="stat-quickest-turn" style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION A: Row-by-Row (Launches on Top, Landings on Bottom) -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                
+                <!-- ROW 1: Launch Stats (Falcon 9 & Falcon Heavy) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Falcon 9 Launch Card -->
+                    <div class="card stat-card" style="padding: 1.5rem;">
+                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                            Falcon 9 Launches
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                            <p style="margin: 0; font-size: 1.1rem;">
+                                <strong id="stat-f9-label">Total Falcon 9 Launch Attempts:</strong>
+                                <span id="stat-f9-attempts">672</span>
+                            </p>
+
+                            <div style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="label-outcome-1">Success:</strong>
+                                    <span id="count-outcome-1">668 (99.48%)</span>
+                                </p>
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="label-outcome-2">Partial Failure:</strong>
+                                    <span id="count-outcome-2">1</span>
+                                </p>
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="label-outcome-3">Total Failures:</strong>
+                                    <span id="count-outcome-3">3</span>
+                                </p>
+                                <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
+                                    &bull; <span id="label-outcome-4">Inflight Failure</span>: <span id="count-outcome-4">2</span>
+                                </p>
+                                <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
+                                    &bull; <span id="label-outcome-5">Preflight Failure</span>: <span id="count-outcome-5">1</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Falcon Heavy Launch Card -->
+                    <div class="card stat-card" style="padding: 1.5rem;">
+                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                            Falcon Heavy Launches
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                            <p style="margin: 0; font-size: 1.1rem;">
+                                <strong id="stat-fh-label">Total Falcon Heavy Launch Attempts:</strong>
+                                <span id="stat-fh-attempts">12</span>
+                            </p>
+
+                            <div style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="fh-label-outcome-1">Success:</strong>
+                                    <span id="fh-count-outcome-1">12 (100.00%)</span>
+                                </p>
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="fh-label-outcome-2">Partial Failure:</strong>
+                                    <span id="fh-count-outcome-2">0</span>
+                                </p>
+                                <p style="margin: 0.2rem 0;">
+                                    <strong id="fh-label-outcome-3">Total Failures:</strong>
+                                    <span id="fh-count-outcome-3">0</span>
+                                </p>
+                                <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
+                                    &bull; <span id="fh-label-outcome-4">Inflight Failure</span>: <span id="fh-count-outcome-4">0</span>
+                                </p>
+                                <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
+                                    &bull; <span id="fh-label-outcome-5">Preflight Failure</span>: <span id="fh-count-outcome-5">0</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW 2: Landing Stats (Falcon 9 & Falcon Heavy Landings) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Falcon 9 Landing Stats Card -->
+                    <div class="card stat-card" style="padding: 1.5rem;">
+                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                            Falcon 9 Landings
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                            <p style="margin: 0; font-size: 1.1rem;">
+                                <strong>Landing Success Rate:</strong>
+                                <span id="stat-f9-landings-total" style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
+                            </p>
+
+                            <div id="landing-metrics-list" style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
+                                <!-- Injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Falcon Heavy Landing Stats Card -->
+                    <div class="card stat-card" style="padding: 1.5rem;">
+                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                            Falcon Heavy Landings
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                            <p style="margin: 0; font-size: 1.1rem;">
+                                <strong>Landing Success Rate:</strong>
+                                <span id="stat-fh-landings-total" style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
+                            </p>
+
+                            <div id="fh-landing-metrics-list" style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
+                                <!-- Injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MAIN BOOSTER FLEET DISPLAY -->
+        <section class="fleet-section">
+            <h2 style="margin-bottom: 1.5rem;">Falcon 9 Booster Fleet</h2>
+            <div id="f9-booster-cards-container"></div>
+        </section>
+
+    </div>
+
+    <!-- ======================================= -->
+    <!-- DETAILED BOOSTER & NOTES INSPECTOR MODAL-->
+    <!-- ======================================= -->
+    <div id="vehicle-detail-modal" class="modal hidden">
+        <div class="modal-content detail-modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="vehicle-detail-title">Booster Details</h2>
+                <span class="close-btn" id="close-vehicle-detail">&times;</span>
+            </div>
+            <div id="vehicle-detail-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="falcon9.js"></script>
 
 </body>
 
