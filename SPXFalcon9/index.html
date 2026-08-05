@@ -26,46 +26,70 @@
 
         <!-- TOP NAVIGATION -->
         <section class="navigation-section" style="margin-bottom: 2rem;">
-            <div class="card country-card" style="max-width: 320px;">
-                <h2>Back to United States</h2>
-                <a href="../UnitedStates/" class="btn">Return to United States</a>
-            </div>
+            <a href="../UnitedStates/"
+                style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s ease;"
+                onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#94a3b8'">
+                <span style="font-size: 1.2rem;">&larr;</span> Back to United States
+            </a>
         </section>
 
         <!-- ======================================= -->
         <!-- TOP STATISTICS DASHBOARD                -->
         <!-- ======================================= -->
         <section class="stats-dashboard" style="margin-bottom: 3rem;">
-            <h1 id="total-attempts-header" style="margin-bottom: 1.5rem; text-align: center;">Falcon Program Overview</h1>
+            <h1 id="total-attempts-header" style="margin-bottom: 1.5rem; text-align: center;">Falcon Program Overview
+            </h1>
 
-            <!-- OVERALL PROGRAM SUMMARY BANNER -->
-            <div class="card stat-card" style="padding: 1.25rem 2rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 8px;">
-                <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem; text-align: center;">
+            <!-- OVERALL PROGRAM SUMMARY BANNER WITH INTEGRATED BUTTON -->
+            <div class="card stat-card"
+                style="padding: 1.25rem 2rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 8px;">
+
+                <div
+                    style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem; text-align: center;">
                     <div>
-                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Active Fleet Status</h3>
-                        <span id="stat-active-fleet" style="font-size: 2rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                        <h3
+                            style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                            Active Fleet Status</h3>
+                        <span id="stat-active-fleet"
+                            style="font-size: 2rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
                     </div>
                     <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.15);"></div>
                     <div>
-                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Most Flown Booster</h3>
-                        <span id="stat-most-flown" style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                        <h3
+                            style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                            Most Flown Booster</h3>
+                        <span id="stat-most-flown"
+                            style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
                     </div>
                     <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.15);"></div>
                     <div>
-                        <h3 style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Quickest Turnaround</h3>
-                        <span id="stat-quickest-turn" style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
+                        <h3
+                            style="margin: 0 0 0.25rem 0; opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                            Quickest Turnaround</h3>
+                        <span id="stat-quickest-turn"
+                            style="font-size: 1.5rem; font-weight: bold; color: var(--accent-blue);">Loading...</span>
                     </div>
+                </div>
+
+                <!-- Integrated Button Row -->
+                <div
+                    style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+                    <button onclick="openVehicleRecordsModal()"
+                        style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--accent-blue, #00d2ff); color: var(--accent-blue, #00d2ff); padding: 0.5rem 1.1rem; font-size: 0.9rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s;">
+                        Vehicle Records &rarr;
+                    </button>
                 </div>
             </div>
 
             <!-- OPTION A: Row-by-Row (Launches on Top, Landings on Bottom) -->
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                
+
                 <!-- ROW 1: Launch Stats (Falcon 9 & Falcon Heavy) -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
                     <!-- Falcon 9 Launch Card -->
                     <div class="card stat-card" style="padding: 1.5rem;">
-                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                        <h2
+                            style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
                             Falcon 9 Launches
                         </h2>
 
@@ -89,10 +113,12 @@
                                     <span id="count-outcome-3">3</span>
                                 </p>
                                 <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
-                                    &bull; <span id="label-outcome-4">Inflight Failure</span>: <span id="count-outcome-4">2</span>
+                                    &bull; <span id="label-outcome-4">Inflight Failure</span>: <span
+                                        id="count-outcome-4">2</span>
                                 </p>
                                 <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
-                                    &bull; <span id="label-outcome-5">Preflight Failure</span>: <span id="count-outcome-5">1</span>
+                                    &bull; <span id="label-outcome-5">Preflight Failure</span>: <span
+                                        id="count-outcome-5">1</span>
                                 </p>
                             </div>
                         </div>
@@ -100,7 +126,8 @@
 
                     <!-- Falcon Heavy Launch Card -->
                     <div class="card stat-card" style="padding: 1.5rem;">
-                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                        <h2
+                            style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
                             Falcon Heavy Launches
                         </h2>
 
@@ -124,28 +151,54 @@
                                     <span id="fh-count-outcome-3">0</span>
                                 </p>
                                 <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
-                                    &bull; <span id="fh-label-outcome-4">Inflight Failure</span>: <span id="fh-count-outcome-4">0</span>
+                                    &bull; <span id="fh-label-outcome-4">Inflight Failure</span>: <span
+                                        id="fh-count-outcome-4">0</span>
                                 </p>
                                 <p style="margin: 0.2rem 0 0.2rem 1.2rem; font-size: 0.9em; opacity: 0.85;">
-                                    &bull; <span id="fh-label-outcome-5">Preflight Failure</span>: <span id="fh-count-outcome-5">0</span>
+                                    &bull; <span id="fh-label-outcome-5">Preflight Failure</span>: <span
+                                        id="fh-count-outcome-5">0</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- MONTHLY COMPARISON TABLE CARD -->
+                <div class="card stat-card" style="padding: 1.5rem; overflow-x: auto;">
+                    <h2
+                        style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                        Monthly Launch Breakdown (2025 vs. 2026)
+                    </h2>
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <th style="padding: 0.5rem;">Month</th>
+                                <th style="padding: 0.5rem;">Falcon 9 (2025)</th>
+                                <th style="padding: 0.5rem;">Falcon 9 (2026)</th>
+                                <th style="padding: 0.5rem;">Falcon Heavy (2025)</th>
+                                <th style="padding: 0.5rem;">Falcon Heavy (2026)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-attempts-table-body">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
                 <!-- ROW 2: Landing Stats (Falcon 9 & Falcon Heavy Landings) -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
                     <!-- Falcon 9 Landing Stats Card -->
                     <div class="card stat-card" style="padding: 1.5rem;">
-                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                        <h2
+                            style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
                             Falcon 9 Landings
                         </h2>
 
                         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
                             <p style="margin: 0; font-size: 1.1rem;">
                                 <strong>Landing Success Rate:</strong>
-                                <span id="stat-f9-landings-total" style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
+                                <span id="stat-f9-landings-total"
+                                    style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
                             </p>
 
                             <div id="landing-metrics-list" style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
@@ -156,17 +209,20 @@
 
                     <!-- Falcon Heavy Landing Stats Card -->
                     <div class="card stat-card" style="padding: 1.5rem;">
-                        <h2 style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
+                        <h2
+                            style="color: var(--accent-blue); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
                             Falcon Heavy Landings
                         </h2>
 
                         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
                             <p style="margin: 0; font-size: 1.1rem;">
                                 <strong>Landing Success Rate:</strong>
-                                <span id="stat-fh-landings-total" style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
+                                <span id="stat-fh-landings-total"
+                                    style="color: var(--accent-blue); font-weight: bold;">Loading...</span>
                             </p>
 
-                            <div id="fh-landing-metrics-list" style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
+                            <div id="fh-landing-metrics-list"
+                                style="margin-top: 0.5rem; line-height: 1.6; opacity: 0.95;">
                                 <!-- Injected dynamically -->
                             </div>
                         </div>
@@ -175,6 +231,46 @@
 
             </div>
         </section>
+
+        <!-- ======================================= -->
+        <!-- FLEET RECORDS & HIGHLIGHTS MODAL        -->
+        <!-- ======================================= -->
+        <div id="vehicle-records-modal" class="hidden"
+            style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+            <div class="card"
+                style="position: relative; width: 90%; max-width: 900px; max-height: 85vh; overflow-y: auto; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 2rem;">
+
+                <!-- Close Button -->
+                <button id="close-vehicle-records" type="button"
+                    style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+
+                <h2
+                    style="color: var(--accent-blue); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 1.25rem;">
+                    Vehicle Records & Highlights
+                </h2>
+
+                <!-- Side-by-Side Tables Container -->
+                <div class="sub-tables-wrapper" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Most Flown Vehicles Table -->
+                    <div class="card"
+                        style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px;">
+                        <h3
+                            style="text-align: center; color: var(--accent-blue); margin-bottom: 1rem; font-size: 1rem;">
+                            Most Flown Vehicles</h3>
+                        <div id="most-flown-sub-table"></div>
+                    </div>
+
+                    <!-- Quickest Turnaround Table -->
+                    <div class="card"
+                        style="padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px;">
+                        <h3
+                            style="text-align: center; color: var(--accent-blue); margin-bottom: 1rem; font-size: 1rem;">
+                            Quickest Turnaround</h3>
+                        <div id="quickest-turnaround-sub-table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- MAIN BOOSTER FLEET DISPLAY -->
         <section class="fleet-section">
@@ -199,6 +295,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="falcon9.js"></script>
+
+    <footer class="footer">
+        <p>Rocket Launch History by SpacePandaroo</p>
+        <p>Data is compiled from Gunter's Space Page, NextSpaceflight, and other sources.</p>
+    </footer>
 
 </body>
 

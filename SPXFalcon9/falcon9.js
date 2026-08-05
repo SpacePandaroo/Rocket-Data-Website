@@ -54,6 +54,133 @@ function normalizeSerial(serialStr) {
 }
 
 // =======================================
+// Vehicle Records Modal Controls
+// =======================================
+
+function openVehicleRecordsModal() {
+    const modal = document.getElementById("vehicle-records-modal");
+    if (modal) modal.classList.remove("hidden");
+}
+
+// =======================================
+// Parse Most Flown Vehicle Table (J2:L12)
+// =======================================
+
+function parseMostFlownVehicleTable() {
+    const container = document.getElementById("most-flown-sub-table");
+    if (!container) return;
+
+    const dataset = DataStore.f9Attempts;
+
+    if (!dataset || !dataset.length) {
+        container.innerHTML = "<p style='padding: 1rem; text-align: center; opacity: 0.7;'>Waiting for data source...</p>";
+        return;
+    }
+
+    let html = `
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    <th style="padding: 0.5rem; width: 20%;">Rank</th>
+                    <th style="padding: 0.5rem; width: 50%;">Vehicle</th>
+                    <th style="padding: 0.5rem; width: 30%; text-align: right;">Flights</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    let validRowsCount = 0;
+
+    // Loop strictly from row 2 to row 12 (indices 1 to 11)
+    for (let i = 1; i <= 11; i++) {
+        const row = dataset[i];
+        if (!row) continue;
+
+        const rank = row[9] || "";    // Column J
+        const vehicle = row[10] || ""; // Column K
+        const flights = row[11] || ""; // Column L
+
+        if (vehicle && String(vehicle).trim() !== "") {
+            validRowsCount++;
+            html += `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 0.5rem; opacity: 0.7;">${rank}</td>
+                    <td style="padding: 0.5rem; font-weight: bold; color: var(--accent-blue);">${vehicle}</td>
+                    <td style="padding: 0.5rem; text-align: right;">${flights}</td>
+                </tr>
+            `;
+        }
+    }
+
+    if (validRowsCount === 0) {
+        container.innerHTML = "<p style='padding: 1rem; text-align: center; opacity: 0.7;'>No data found in range.</p>";
+        return;
+    }
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+}
+
+// =======================================
+// Parse Quickest Turnaround Table (N2:P12)
+// =======================================
+
+function parseQuickestTurnaroundTable() {
+    const container = document.getElementById("quickest-turnaround-sub-table");
+    if (!container) return;
+
+    const dataset = DataStore.f9Attempts;
+
+    if (!dataset || !dataset.length) {
+        container.innerHTML = "<p style='padding: 1rem; text-align: center; opacity: 0.7;'>Waiting for data source...</p>";
+        return;
+    }
+
+    let html = `
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    <th style="padding: 0.5rem; width: 20%;">Rank</th>
+                    <th style="padding: 0.5rem; width: 40%;">Vehicle</th>
+                    <th style="padding: 0.5rem; width: 40%; text-align: right;">Turnaround</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    let validRowsCount = 0;
+
+    // Loop strictly from row 2 to row 12 (indices 1 to 11)
+    for (let i = 1; i <= 11; i++) {
+        const row = dataset[i];
+        if (!row) continue;
+
+        const rank = row[13] || "";    // Column N (Rank)
+        const vehicle = row[14] || "";  // Column O (Vehicle)
+        const turnaround = row[15] || ""; // Column P (Turnaround Time)
+
+        if (vehicle && String(vehicle).trim() !== "") {
+            validRowsCount++;
+            html += `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 0.5rem; opacity: 0.7;">${rank}</td>
+                    <td style="padding: 0.5rem; font-weight: bold; color: var(--accent-blue);">${vehicle}</td>
+                    <td style="padding: 0.5rem; text-align: right; font-family: monospace;">${turnaround}</td>
+                </tr>
+            `;
+        }
+    }
+
+    if (validRowsCount === 0) {
+        container.innerHTML = "<p style='padding: 1rem; text-align: center; opacity: 0.7;'>No turnaround data found.</p>";
+        return;
+    }
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+}
+
+// =======================================
 // Parse Launch Outcomes & Landing Data
 // =======================================
 
@@ -94,7 +221,74 @@ function parseAttemptsData() {
             }
         });
 
-        // 3. Parse Falcon 9 Landing Data (Rows 27 to 35, Columns B through D)
+        // 3. Parse Monthly Comparison Table Data
+        const monthlyTableBody = document.getElementById("monthly-attempts-table-body");
+        if (monthlyTableBody) {
+            
+            const yearRow = DataStore.f9Attempts[10] || [];
+            
+            const extractYear = (val) => {
+                const match = String(val || "").match(/\d{4}/);
+                return match ? match[0] : "Year";
+            };
+
+            const f9Col1Year = extractYear(yearRow[2]); 
+            const f9Col2Year = extractYear(yearRow[3]); 
+            const fhCol1Year = extractYear(yearRow[6]); 
+            const fhCol2Year = extractYear(yearRow[7]); 
+
+            const tableEl = monthlyTableBody.closest("table");
+            if (tableEl) {
+                tableEl.style.tableLayout = "fixed";
+                tableEl.style.width = "100%";
+                tableEl.innerHTML = `
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);">
+                            <th style="padding: 0.75rem 0.5rem; width: 20%; text-align: left;">Month</th>
+                            <th style="padding: 0.75rem 0.5rem; width: 20%; text-align: center;">Falcon 9<br><span style="font-size:0.85em; opacity:0.8;">(${f9Col1Year})</span></th>
+                            <th style="padding: 0.75rem 0.5rem; width: 20%; text-align: center;">Falcon 9<br><span style="font-size:0.85em; opacity:0.8;">(${f9Col2Year})</span></th>
+                            <th style="padding: 0.75rem 0.5rem; width: 20%; text-align: center;">Falcon Heavy<br><span style="font-size:0.85em; opacity:0.8;">(${fhCol1Year})</span></th>
+                            <th style="padding: 0.75rem 0.5rem; width: 20%; text-align: center;">Falcon Heavy<br><span style="font-size:0.85em; opacity:0.8;">(${fhCol2Year})</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-attempts-table-body"></tbody>
+                `;
+            }
+            
+            const newTBody = document.getElementById("monthly-attempts-table-body");
+            
+            for (let i = 11; i <= 23; i++) {
+                const mRow = DataStore.f9Attempts[i];
+                if (!mRow) continue;
+
+                const monthName = mRow[1] ? String(mRow[1]).trim() : "";
+                if (!monthName || monthName.toLowerCase().includes("current") || monthName.toLowerCase().includes("previous")) continue;
+
+                const valF9_Col1 = mRow[2] !== undefined && mRow[2] !== "" ? String(mRow[2]).trim() : "0";
+                const valF9_Col2 = mRow[3] !== undefined && mRow[3] !== "" ? String(mRow[3]).trim() : "0";
+                const valFH_Col1 = mRow[6] !== undefined && mRow[6] !== "" ? String(mRow[6]).trim() : "0";
+                const valFH_Col2 = mRow[7] !== undefined && mRow[7] !== "" ? String(mRow[7]).trim() : "0";
+
+                const tr = document.createElement("tr");
+                tr.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
+                
+                if (monthName.toLowerCase().includes("total")) {
+                    tr.style.backgroundColor = "rgba(139, 92, 246, 0.1)";
+                    tr.style.fontWeight = "bold";
+                }
+
+                tr.innerHTML = `
+                    <td style="padding: 0.5rem; font-weight: bold; text-align: left;">${monthName}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${valF9_Col1}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${valF9_Col2}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${valFH_Col1}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${valFH_Col2}</td>
+                `;
+                newTBody.appendChild(tr);
+            }
+        }
+
+        // 4. Parse Falcon 9 Landing Data (Rows 27 to 35, Columns B through D)
         const landingRows = DataStore.f9Attempts.slice(26, 35);
         const f9LandingData = [];
         landingRows.forEach(row => {
@@ -107,7 +301,7 @@ function parseAttemptsData() {
         });
         renderLandingStatsUI("landing-metrics-list", "stat-f9-landings-total", f9LandingData);
 
-        // 4. Parse Falcon Heavy Landing Data (Rows 27 to 35, Columns F through H)
+        // 5. Parse Falcon Heavy Landing Data (Rows 27 to 35, Columns F through H)
         const fhLandingData = [];
         landingRows.forEach(row => {
             const site = row?.[5] ? String(row[5]).trim() : "";
@@ -209,6 +403,9 @@ function calculateTopStats() {
     if (mostFlownEl) mostFlownEl.textContent = `${mostFlownSerial} (${maxFlights} flights)`;
     if (bestTurnEl) bestTurnEl.textContent = bestTurnaroundSerial !== "N/A" ? bestTurnaroundSerial : "N/A";
     if (activeEl) activeEl.textContent = `${activeBoostersCount} Boosters`;
+
+    parseMostFlownVehicleTable();
+    parseQuickestTurnaroundTable();
 }
 
 // =======================================
@@ -413,6 +610,7 @@ async function loadAllFalcon9Data() {
 document.addEventListener("DOMContentLoaded", () => {
     loadAllFalcon9Data();
 
+    // Detail Modal Listeners
     const detailModal = document.getElementById("vehicle-detail-modal");
     const closeDetailBtn = document.getElementById("close-vehicle-detail");
 
@@ -423,6 +621,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (detailModal) {
         detailModal.onclick = (e) => {
             if (e.target === detailModal) detailModal.classList.add("hidden");
+        };
+    }
+
+    // Vehicle Records Modal Listeners
+    const recordsModal = document.getElementById("vehicle-records-modal");
+    const closeRecordsBtn = document.getElementById("close-vehicle-records");
+
+    if (closeRecordsBtn && recordsModal) {
+        closeRecordsBtn.onclick = () => recordsModal.classList.add("hidden");
+    }
+
+    if (recordsModal) {
+        recordsModal.onclick = (e) => {
+            if (e.target === recordsModal) recordsModal.classList.add("hidden");
         };
     }
 });
